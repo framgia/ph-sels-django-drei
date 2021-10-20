@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import Navbar from "../component/Navbar";
+import Navbar from "../components/Navbar";
 import { Field, Form } from "react-final-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails, updateUserDetails } from "../actions";
-import FileField from "../component/FileField";
-import Message from "../component/Message";
+import { getUserDetails, updateUserDetails } from "../actions/user";
+import FileField from "../components/FileField";
+
 const ProfilePage = () => {
   const required = (value) => (value ? undefined : "this field is required");
   const dispatch = useDispatch();
-  const { profile } = useSelector((state) => state.profile);
+  const profile = useSelector((state) => state.profile);
 
   const validatePasswordMatch = (values) => {
     const errors = {};
