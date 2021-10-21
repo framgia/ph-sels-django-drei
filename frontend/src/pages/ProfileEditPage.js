@@ -8,7 +8,7 @@ import FileField from "../components/FileField";
 const ProfilePage = () => {
   const required = (value) => (value ? undefined : "this field is required");
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.profile);
+  const { profile } = useSelector((state) => state.profile);
 
   const validatePasswordMatch = (values) => {
     const errors = {};
@@ -41,7 +41,6 @@ const ProfilePage = () => {
       <Form onSubmit={handleSubmit} validate={validatePasswordMatch}>
         {({ handleSubmit }) => (
           <div>
-            <h4 className="ui dividing header">John Doe</h4>
             <form className="ui form" onSubmit={handleSubmit}>
               <img
                 className="ui circular small image"

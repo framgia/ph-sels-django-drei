@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from .serializers import (
-    StudentSerializer,
+    StudentRetrieveUpdateSerializer,
     RegisterStudentSerializer,
     MyTokenObtainPairSerializer,
 )
@@ -17,9 +17,9 @@ from .permissions import OwnProfilePermission
 from .models import Student
 
 
-class RetrieveStudentProfileView(generics.RetrieveUpdateAPIView):
+class RetrieveUpdateStudentProfileView(generics.RetrieveUpdateAPIView):
     queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+    serializer_class = StudentRetrieveUpdateSerializer
     permission_classes = [IsAuthenticated, OwnProfilePermission]
     parser_classes = [JSONParser, FormParser, MultiPartParser]
     lookup_url_kwarg = "pk"

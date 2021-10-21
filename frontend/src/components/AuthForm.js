@@ -4,7 +4,7 @@ import "./AuthForm.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { signIn } from "../actions";
+import { signIn } from "../actions/user";
 
 const AuthForm = () => {
   const required = (value) => (value ? undefined : "Required");
