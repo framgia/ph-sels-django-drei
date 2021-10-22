@@ -18,7 +18,6 @@ class StudentFollowView(APIView):
     ]
 
     def get(self, request, *args, **kwargs):
-        print(kwargs.get("pk"))
         try:
             student_follow_obj = StudentFollowInformation.objects.get(
                 student_id=kwargs.get("pk"), follower=request.user

@@ -6,6 +6,7 @@ import {
   FETCH_STUDENT_LIST,
   FETCH_STUDENT_DETAIL,
   FOLLOW_STUDENT,
+  UNFOLLOW_STUDENT,
 } from "./types";
 import api from "../api/api";
 
@@ -86,6 +87,16 @@ const followStudent = (id) => async (dispatch, getState) => {
   dispatch({ type: FOLLOW_STUDENT, payload: response.data });
 };
 
+const unfollowStudent = (id) => async (dispatch, getState) => {
+  const { userData } = getState().auth;
+  const response = await api.post(`/students/follow/${id}`, null, {
+    headers: {
+      Authorization: `Bearer ${userData.access}`,
+    },
+  });
+  dispatch({ type: UNFOLLOW_STUDENT, payload: response.data });
+};
+
 export {
   signIn,
   signOut,
@@ -94,4 +105,5 @@ export {
   getStudentList,
   getStudentDetail,
   followStudent,
+  unfollowStudent,
 };
