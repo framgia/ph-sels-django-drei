@@ -8,7 +8,7 @@ import FileField from "../components/FileField";
 const ProfilePage = () => {
   const required = (value) => (value ? undefined : "this field is required");
   const dispatch = useDispatch();
-  const { profile } = useSelector((state) => state.profile);
+  const profile = useSelector((state) => state.profile);
 
   const validatePasswordMatch = (values) => {
     const errors = {};
