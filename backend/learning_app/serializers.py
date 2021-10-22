@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from authentication_app.models import Student
-from .models import StudentFollowInformation
+from .models import Category, StudentFollowInformation
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
 
 
 class StudentDetailSerializer(serializers.ModelSerializer):

@@ -8,6 +8,7 @@ import SignUpForm from "./SignUpForm";
 import ProfileEditPage from "../pages/ProfileEditPage";
 import StudentListPage from "../pages/StudentListPage";
 import StudentProfilePage from "../pages/StudentProfilePage";
+import CategoryList from "../pages/Categories/CategoryList";
 /*
 TODO:
 Refactor AuthForm and SignUpForm into a single form
@@ -29,6 +30,7 @@ const App = () => {
             path="/students/profile/:id"
             component={StudentProfilePage}
           />
+          <ProtectedRoute exact path="/categories" component={CategoryList} />
           <Route path="/signin" component={AuthForm} />
           <Route path="/signup" component={SignUpForm} />
         </Switch>

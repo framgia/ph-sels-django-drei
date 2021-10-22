@@ -7,6 +7,7 @@ import {
   FETCH_STUDENT_DETAIL,
   FOLLOW_STUDENT,
   UNFOLLOW_STUDENT,
+  FETCH_CATEGORY_LIST,
 } from "./types";
 import api from "../api/api";
 
@@ -86,7 +87,6 @@ const followStudent = (id) => async (dispatch, getState) => {
   });
   dispatch({ type: FOLLOW_STUDENT, payload: response.data });
 };
-
 const unfollowStudent = (id) => async (dispatch, getState) => {
   const { userData } = getState().auth;
   const response = await api.post(`/students/follow/${id}`, null, {
@@ -94,7 +94,18 @@ const unfollowStudent = (id) => async (dispatch, getState) => {
       Authorization: `Bearer ${userData.access}`,
     },
   });
-  dispatch({ type: UNFOLLOW_STUDENT, payload: response.data });
+  dispatch({ type: FOLLOW_STUDENT, payload: response.data });
+};
+
+const getCategories = (page) => async (dispatch, getState) => {
+  const { userData } = getState().auth;
+  const response = await api.get(`/students/categories/?page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${userData.access}`,
+    },
+  });
+
+  dispatch({ type: FETCH_CATEGORY_LIST, payload: response.data });
 };
 
 export {
@@ -106,4 +117,5 @@ export {
   getStudentDetail,
   followStudent,
   unfollowStudent,
+  getCategories,
 };

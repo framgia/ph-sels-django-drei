@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { signOut } from "../actions/user";
+import { signOut } from "../actions";
 import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -16,8 +16,8 @@ const Navbar = () => {
       <NavLink to="/students" className="item" activeClassName="active">
         Students
       </NavLink>
-      <NavLink to="/friends" className="item" activeClassName="active">
-        Friends
+      <NavLink to="/categories" className="item" activeClassName="active">
+        Categories
       </NavLink>
       <div className="right menu">
         <NavLink to="/profile" className="ui item">

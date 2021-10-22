@@ -15,6 +15,7 @@ const studentReducer = (state = {}, action) => {
       return { ...action.payload };
     case UNFOLLOW_STUDENT:
       return { ...action.payload };
+
     default:
       return state;
   }
