@@ -94,7 +94,7 @@ const unfollowStudent = (id) => async (dispatch, getState) => {
       Authorization: `Bearer ${userData.access}`,
     },
   });
-  dispatch({ type: FOLLOW_STUDENT, payload: response.data });
+  dispatch({ type: UNFOLLOW_STUDENT, payload: response.data });
 };
 
 const getCategories = (page) => async (dispatch, getState) => {

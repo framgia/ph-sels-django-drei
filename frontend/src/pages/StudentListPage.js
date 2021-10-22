@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
-import Navbar from "../component/Navbar";
+import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentList } from "../actions";
-import "../component/AuthForm.css";
-import Loading from "../component/Loading";
+import "../components/AuthForm.css";
+import Loading from "../components/Loading";
 const StudentListPage = () => {
   const students = useSelector((state) => state.students);
   const observer = useRef("");

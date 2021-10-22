@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../component/Navbar";
+import Navbar from "../../components/Navbar";
 import { useSelector, useDispatch } from "react-redux";
-import Loading from "../../component/Loading";
+import Loading from "../../components/Loading";
 import { getCategories } from "../../actions";
 import { Link } from "react-router-dom";
 const CategoryList = () => {
