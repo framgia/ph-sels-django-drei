@@ -3,19 +3,9 @@ from .models import Student
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from django.contrib.auth import password_validation
 
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        data["user_id"] = self.user.pk
-        data["is_admin"] = self.user.is_superuser
-
-        return data
-
-
-class StudentSerializer(serializers.ModelSerializer):
+class StudentRetrieveUpdateSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(max_length=None, use_url=True)
 
     class Meta:
@@ -30,6 +20,15 @@ class StudentSerializer(serializers.ModelSerializer):
         except:
             pass
         return super().update(instance, validated_data)
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data["user_id"] = self.user.pk
+        data["is_admin"] = self.user.is_superuser
+
+        return data
 
 
 class RegisterStudentSerializer(serializers.ModelSerializer):

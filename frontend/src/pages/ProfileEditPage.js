@@ -41,7 +41,6 @@ const ProfilePage = () => {
       <Form onSubmit={handleSubmit} validate={validatePasswordMatch}>
         {({ handleSubmit }) => (
           <div>
-            <h4 className="ui dividing header">John Doe</h4>
             <form className="ui form" onSubmit={handleSubmit}>
               <img
                 className="ui circular small image"

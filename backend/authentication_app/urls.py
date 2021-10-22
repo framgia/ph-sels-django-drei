@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 from .views import (
     StudentSignUpView,
     StudentLogoutView,
-    RetrieveStudentProfileView,
+    RetrieveUpdateStudentProfileView,
     ObtainTokenPairView,
 )
 
@@ -17,7 +17,7 @@ urlpatterns = [
     path("signup/", StudentSignUpView.as_view(), name="signup"),
     path(
         "profile/<int:pk>/",
-        RetrieveStudentProfileView.as_view(),
+        RetrieveUpdateStudentProfileView.as_view(),
         name="view-profile",
     ),
 ]

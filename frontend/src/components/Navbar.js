@@ -1,27 +1,28 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { signOut } from "../actions";
-import { Link } from "react-router-dom";
+import { signOut } from "../actions/user";
+import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const dispatch = useDispatch();
   const logout = () => {
     dispatch(signOut());
   };
+
   return (
     <div className="ui secondary pointing menu">
-      <Link to="/" className="active item">
+      <NavLink exact to="/" className="item" activeClassName="active">
         Home
-      </Link>
-      <Link to="/" className="item">
-        Words
-      </Link>
-      <Link to="/" className="item">
+      </NavLink>
+      <NavLink to="/students" className="item" activeClassName="active">
+        Students
+      </NavLink>
+      <NavLink to="/friends" className="item" activeClassName="active">
         Friends
-      </Link>
+      </NavLink>
       <div className="right menu">
-        <Link to="/profile" className="ui item">
+        <NavLink to="/profile" className="ui item">
           Profile
-        </Link>
+        </NavLink>
         <button className="ui button primary" onClick={logout}>
           Logout
         </button>
