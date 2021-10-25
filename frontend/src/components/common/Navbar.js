@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { signOut } from "../actions";
+import { signOut } from "../../redux/actions/user";
 import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const dispatch = useDispatch();

@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   userData: getFromLocalStorage().userData,
 };
 
-const authReducer = (state = INITIAL_STATE, action) => {
+const auth = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SIGN_IN:
       localStorage.setItem(
@@ -29,4 +29,4 @@ const authReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default authReducer;
+export default auth;
