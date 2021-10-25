@@ -31,9 +31,13 @@ const StudentListPage = () => {
     if (students.results) {
       return students.results.map((student, index) => {
         return students.results.length === index + 1 && students.next ? (
-          <StudentList student={student} callback={lastStudentCallBack} />
+          <StudentList
+            student={student}
+            callback={lastStudentCallBack}
+            key={student.id}
+          />
         ) : (
-          <StudentList student={student} />
+          <StudentList student={student} key={student.id} />
         );
       });
     } else {
