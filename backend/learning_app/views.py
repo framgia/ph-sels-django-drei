@@ -1,15 +1,26 @@
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from .models import StudentFollowInformation
+from .models import StudentFollowInformation, Category
 from authentication_app.models import Student
 from .serializers import (
     StudentDetailSerializer,
     StudentListSerializer,
     StudentFollowSerializer,
+    CategorySerializer,
 )
-from .pagination import StudentListPagination
+from .pagination import CategoryListPagination, StudentListPagination
 from rest_framework.response import Response
+
+
+class CategoryListView(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [
+        IsAuthenticated,
+    ]
+    pagination_class = CategoryListPagination
+
 
 # Create your views here.
 class StudentFollowView(APIView):

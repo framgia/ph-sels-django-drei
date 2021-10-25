@@ -1,15 +1,10 @@
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
-import {
-  getStudentDetail,
-  followStudent,
-  unfollowStudent,
-} from "../actions/user";
+import { getStudentDetail, followStudent, unfollowStudent } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import Loading from "../components/Loading";
 import ActivityFeed from "../components/ActivityFeed";
-
 const StudentProfilePage = () => {
   const dispatch = useDispatch();
   const { student, total_followers, total_following, is_following } =

@@ -24,11 +24,9 @@ const SignUpForm = () => {
   }, [auth.isLoggedIn, history]);
 
   const signUp = (formValues) => {
-    api.post("/signup/", formValues)
-      .then((res) => {
-        history.push("/signin");
-      })
-      .catch((err) => {});
+    api.post("/signup/", formValues).then(() => {
+      history.push("/signin");
+    });
   };
   return (
     <div>

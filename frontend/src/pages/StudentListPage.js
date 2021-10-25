@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useCallback, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getStudentList } from "../actions/user";
+import { getStudentList } from "../actions";
 import "../components/AuthForm.css";
 import Loading from "../components/Loading";
 const StudentListPage = () => {
