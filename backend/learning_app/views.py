@@ -8,6 +8,7 @@ from .models import (
     StudentQuestionAnswered,
     Question,
     StudentLesson,
+    Student,
 )
 from authentication_app.models import Student
 from .serializers import (
@@ -24,19 +25,29 @@ from .pagination import CategoryListPagination, StudentListPagination
 from rest_framework.response import Response
 
 
-class StudentLessonView(generics.RetrieveAPIView):
-    queryset = StudentLesson.objects.all()
-    serializer_class = StudentLessonSerializer
+class StudentLessonViewByCategory(APIView):
     permission_classes = [
         IsAuthenticated,
     ]
-    lookup_field = "pk"
 
-    # def get_queryset(self):
-    #     obj = StudentLesson.objects.filter(
-    #         student=self.request.user, category_id=self.kwargs.get("pk")
-    #     )
-    #     return obj
+    def get(self, request, pk):
+        try:
+            lesson = StudentLesson.objects.get(student=request.user, category_id=pk)
+            serializer = StudentLessonSerializer(lesson)
+            return Response(serializer.data)
+        except:
+            return Response(None)
+
+
+class StudentLessonView(APIView):
+    permission_classes = [
+        IsAuthenticated,
+    ]
+
+    def get(self, request):
+        studentLesson = StudentLesson.objects.filter(student=request.user)
+        serializer = StudentLessonSerializer(studentLesson, many=True)
+        return Response(serializer.data)
 
 
 class StudentQuestionAnsweredView(generics.CreateAPIView):

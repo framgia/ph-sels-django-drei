@@ -2,16 +2,19 @@ import React, { useEffect } from "react";
 import Navbar from "../../components/common/Navbar";
 import { getCategory, submitAnswer } from "../../redux/actions/category";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import Wizard from "./components/WizardForm";
 import { sleep, trimQuestion } from "../../utils";
 import Loading from "../../components/common/Loading";
 import Question from "./components/Question";
+import { getStudentLesson } from "../../redux/actions/student";
 
 const CategoryDetail = () => {
   const dispatch = useDispatch();
-  const category = useSelector((state) => state.selectedCategory);
+  const category = useSelector((state) => state.categories);
+  const student_lesson = useSelector((state) => state.students.lesson);
   const { id } = useParams();
+  const history = useHistory();
 
   const QUESTION_KEY = "question ";
 
@@ -20,11 +23,17 @@ const CategoryDetail = () => {
       submitAnswer(id, { category: category.id, answers: trimQuestion(values) })
     );
     await sleep(300);
+    alert("Answers have been submitted!");
+    history.push("/categories");
   };
 
   useEffect(() => {
     dispatch(getCategory(id));
-  }, [dispatch, id]);
+    dispatch(getStudentLesson(id));
+    if (student_lesson) {
+      history.push("/categories");
+    }
+  }, [dispatch, id, history, student_lesson]);
 
   const renderCategory = () => {
     if (category.question) {

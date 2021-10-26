@@ -21,7 +21,7 @@ class StudentFollowInformation(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=50)
-    description = models.TextField(max_length=250)
+    description = models.CharField(max_length=250)
 
     def __str__(self):
         return self.title
@@ -31,7 +31,7 @@ class Question(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="question"
     )
-    description = models.TextField(max_length=100)
+    description = models.CharField(max_length=100)
 
     def __str__(self):
         return self.description

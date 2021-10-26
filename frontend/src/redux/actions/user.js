@@ -5,6 +5,7 @@ import {
   UPDATE_USER_DETAILS,
 } from "./types";
 import api from "../../api/api";
+
 const signIn = (formValues) => async (dispatch) => {
   const response = await api.post("/auth/token/", formValues);
   dispatch({ type: SIGN_IN, payload: response.data });
@@ -26,26 +27,13 @@ const signOut = () => async (dispatch, getState) => {
 const getUserDetails = (id) => async (dispatch, getState) => {
   const { userData } = getState().auth;
 
-  const response = await api.get(`/profile/${id ? id : userData.user_id}/`, {
-    headers: {
-      Authorization: `Bearer ${userData.access}`,
-    },
-  });
+  const response = await api.get(`/profile/${id ? id : userData.user_id}/`);
   dispatch({ type: FETCH_USER_DETAILS, payload: response.data });
 };
 
 const updateUserDetails = (formValues) => async (dispatch, getState) => {
   const { userData } = getState().auth;
-  const response = await api.patch(
-    `/profile/${userData.user_id}/`,
-    formValues,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${userData.access}`,
-      },
-    }
-  );
+  const response = await api.patch(`/profile/${userData.user_id}/`, formValues);
   dispatch({ type: UPDATE_USER_DETAILS, payload: response.data });
 };
 export { signIn, signOut, getUserDetails, updateUserDetails };

@@ -22,16 +22,4 @@ const category = (state = {}, action) => {
   }
 };
 
-const selectedCategory = (state={},action) => {
-
-  switch(action.type){
-    case FETCH_CATEGORY:
-      return {
-        ...state,...action.payload,
-      }
-    default:
-      return state
-  }
-
-}
-export {category,selectedCategory};
+export default category;
