@@ -11,7 +11,7 @@ import { getStudentLesson } from "../../redux/actions/student";
 
 const CategoryDetail = () => {
   const dispatch = useDispatch();
-  const category = useSelector((state) => state.categories);
+  const category = useSelector((state) => state.selectedCategory);
   const student_lesson = useSelector((state) => state.students.lesson);
   const { id } = useParams();
   const history = useHistory();
