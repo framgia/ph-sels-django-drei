@@ -1,6 +1,50 @@
 from rest_framework import serializers
 from authentication_app.models import Student
-from .models import Category, StudentFollowInformation
+from .models import (
+    Category,
+    Choice,
+    Question,
+    StudentFollowInformation,
+    StudentQuestionAnswered,
+    StudentLesson,
+)
+
+
+class StudentLessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentLesson
+        fields = "__all__"
+
+
+class StudentQuestionAnsweredSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentQuestionAnswered
+        fields = [
+            "question",
+        ]
+        extra_kwargs = {"question": {"read_only": True}}
+
+
+class ChoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Choice
+        fields = "__all__"
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    choice = ChoiceSerializer(many=True)
+
+    class Meta:
+        model = Question
+        fields = "__all__"
+
+
+class CategoryDetailSerializer(serializers.ModelSerializer):
+    question = QuestionSerializer(many=True)
+
+    class Meta:
+        model = Category
+        fields = "__all__"
 
 
 class CategorySerializer(serializers.ModelSerializer):

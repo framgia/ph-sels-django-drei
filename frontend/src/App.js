@@ -1,16 +1,18 @@
 import React from "react";
-import AuthForm from "./AuthForm";
+import AuthForm from "./pages/Login/AuthForm";
 import { Switch, Router, Route } from "react-router-dom";
-import history from "../history";
-import HomePage from "../pages/HomePage";
-import ProtectedRoute from "./ProtectedRoute";
-import SignUpForm from "./SignUpForm";
-import ProfileEditPage from "../pages/ProfileEditPage";
-import StudentListPage from "../pages/StudentListPage";
-import StudentProfilePage from "../pages/StudentProfilePage";
-import CategoryList from "../pages/Categories/CategoryList";
+import history from "./history";
+import HomePage from "./pages/Home/HomePage";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import SignUpForm from "./pages/Login/SignUpForm";
+import ProfileEditPage from "./pages/Profile/ProfileEditPage";
+import StudentListPage from "./pages/Students/StudentListPage";
+import StudentProfilePage from "./pages/Students/StudentProfilePage";
+import CategoryList from "./pages/Categories/CategoryList";
+import CategoryDetail from "./pages/Categories/CategoryDetail";
 /*
 TODO:
+
 Refactor AuthForm and SignUpForm into a single form
 Create email format validation on front end
 MinValue validation for sign up fields in front-end
@@ -31,6 +33,7 @@ const App = () => {
             component={StudentProfilePage}
           />
           <ProtectedRoute exact path="/categories" component={CategoryList} />
+          <ProtectedRoute path="/categories/:id" component={CategoryDetail} />
           <Route path="/signin" component={AuthForm} />
           <Route path="/signup" component={SignUpForm} />
         </Switch>

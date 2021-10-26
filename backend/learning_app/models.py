@@ -21,7 +21,53 @@ class StudentFollowInformation(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=50)
-    description = models.TextField()
+    description = models.TextField(max_length=250)
 
     def __str__(self):
         return self.title
+
+
+class Question(models.Model):
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="question"
+    )
+    description = models.TextField(max_length=100)
+
+    def __str__(self):
+        return self.description
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, related_name="choice"
+    )
+    value = models.CharField(max_length=50)
+    is_answer = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.value
+
+
+class StudentQuestionAnswered(models.Model):
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, related_name="student_answer"
+    )
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="student_category_answer"
+    )
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, related_name="question_answered"
+    )
+    answer = models.ForeignKey(
+        Choice, on_delete=models.CASCADE, related_name="student_anwer"
+    )
+
+
+class StudentLesson(models.Model):
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, related_name="student_lesson"
+    )
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="student_category"
+    )
+    is_finished = models.BooleanField(default=False)

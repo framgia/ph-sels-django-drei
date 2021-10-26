@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/common/Navbar";
 import { useSelector, useDispatch } from "react-redux";
-import Loading from "../../components/Loading";
-import { getCategories } from "../../actions";
+import Loading from "../../components/common/Loading";
+import { getCategories } from "../../redux/actions/category";
 import { Link } from "react-router-dom";
 const CategoryList = () => {
   const dispatch = useDispatch();
@@ -24,13 +24,18 @@ const CategoryList = () => {
 
   useEffect(() => {
     dispatch(getCategories(page));
-  }, [page, dispatch]);
+  }, [dispatch, page]);
 
   const renderCategories = () => {
+    console.log(categories)
     if (categories.results) {
       return categories.results.map((category) => {
         return (
-          <div className="column" style={{ paddingBottom: "20px" }}>
+          <div
+            className="column"
+            style={{ paddingBottom: "20px" }}
+            key={category.id}
+          >
             <div className="ui card">
               <div className="content">
                 <div className="header">{category.title}</div>
@@ -39,7 +44,10 @@ const CategoryList = () => {
                   <p>{category.description}</p>
                 </div>
               </div>
-              <Link to={`/categories/${category.id}`} class="ui primary button">
+              <Link
+                to={`/categories/${category.id}`}
+                className="ui primary button"
+              >
                 Start
               </Link>
             </div>
@@ -63,7 +71,7 @@ const CategoryList = () => {
           className="ui left labeled icon button"
           onClick={prevPage}
         >
-          <i class="left arrow icon"></i>
+          <i className="left arrow icon"></i>
           Previous
         </Link>
       ) : (
@@ -76,7 +84,7 @@ const CategoryList = () => {
           className="ui right labeled icon button"
           onClick={nextPage}
         >
-          <i class="right arrow icon"></i>
+          <i className="right arrow icon"></i>
           Next
         </Link>
       ) : (

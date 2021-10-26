@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Field, Form } from "react-final-form";
-import api from "../api/api";
+import api from "../../api/api";
 
 const SignUpForm = () => {
   const auth = useSelector((state) => state.auth);
@@ -24,9 +24,15 @@ const SignUpForm = () => {
   }, [auth.isLoggedIn, history]);
 
   const signUp = (formValues) => {
-    api.post("/signup/", formValues).then(() => {
-      history.push("/signin");
-    });
+    api
+      .post("/signup/", formValues)
+      .then((res) => {
+        history.push("/signin");
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(Object.values(err.response.data));
+      });
   };
   return (
     <div>
@@ -68,7 +74,7 @@ const SignUpForm = () => {
                   )}
                 </Field>
               </div>
-              <Field name="email" validate={required}>
+              <Field name="email" validate={required} type="email">
                 {({ input, meta }) => (
                   <div
                     className={

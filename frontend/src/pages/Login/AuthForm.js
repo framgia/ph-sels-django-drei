@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Field, Form } from "react-final-form";
-import "./AuthForm.css";
+import "../../index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { signIn } from "../actions";
+import { signIn } from "../../redux/actions/user";
 
 const AuthForm = () => {
   const required = (value) => (value ? undefined : "Required");

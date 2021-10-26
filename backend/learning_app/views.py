@@ -1,16 +1,93 @@
 from rest_framework import generics
+from rest_framework.validators import ValidationError
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from .models import StudentFollowInformation, Category
+from .models import (
+    StudentFollowInformation,
+    Category,
+    StudentQuestionAnswered,
+    Question,
+    StudentLesson,
+)
 from authentication_app.models import Student
 from .serializers import (
+    CategoryDetailSerializer,
     StudentDetailSerializer,
+    StudentLessonSerializer,
     StudentListSerializer,
     StudentFollowSerializer,
     CategorySerializer,
+    CategoryDetailSerializer,
+    StudentQuestionAnsweredSerializer,
 )
 from .pagination import CategoryListPagination, StudentListPagination
 from rest_framework.response import Response
+
+
+class StudentLessonView(generics.RetrieveAPIView):
+    queryset = StudentLesson.objects.all()
+    serializer_class = StudentLessonSerializer
+    permission_classes = [
+        IsAuthenticated,
+    ]
+    lookup_field = "pk"
+
+    # def get_queryset(self):
+    #     obj = StudentLesson.objects.filter(
+    #         student=self.request.user, category_id=self.kwargs.get("pk")
+    #     )
+    #     return obj
+
+
+class StudentQuestionAnsweredView(generics.CreateAPIView):
+    queryset = StudentQuestionAnswered.objects.all()
+    serializer_class = StudentQuestionAnsweredSerializer
+    permission_classes = [
+        IsAuthenticated,
+    ]
+
+    def perform_create(self, serializer):
+        answers = self.request.data.get("answers")
+        queryset = StudentQuestionAnswered.objects.filter(
+            student=self.request.user, category=self.request.data.get("category")
+        )
+        if queryset.exists():
+            raise ValidationError({"error": "Course already taken"})
+
+        # Validate if user manually insert an answer with incorrect length
+        category_id = self.request.data.get("category")
+        question_count = Question.objects.filter(category=category_id).count()
+        if len(answers) != question_count:
+            print(question_count)
+            raise ValidationError({"error": "You must supply all the answers"})
+
+        # create bulk answers on
+        try:
+            obj = []
+            for question in answers:
+                obj.append(
+                    StudentQuestionAnswered(
+                        student=self.request.user,
+                        category_id=self.request.data.get("category"),
+                        question_id=int(question),
+                        answer_id=int(answers[question]),
+                    )
+                )
+            StudentLesson.objects.create(
+                student=self.request.user,
+                category_id=self.request.data.get("category"),
+                is_finished=True,
+            )
+            return StudentQuestionAnswered.objects.bulk_create(obj)
+        except:
+            raise ValidationError({"error": "Answers have not been recorded"})
+
+
+class CategoryDetailView(generics.RetrieveAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryDetailSerializer
+    permission_classes = [IsAuthenticated]
+    lookup_url_kwarg = "pk"
 
 
 class CategoryListView(generics.ListAPIView):
@@ -29,6 +106,7 @@ class StudentFollowView(APIView):
     ]
 
     def get(self, request, *args, **kwargs):
+        print(kwargs.get("pk"))
         try:
             student_follow_obj = StudentFollowInformation.objects.get(
                 student_id=kwargs.get("pk"), follower=request.user
