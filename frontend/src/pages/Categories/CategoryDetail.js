@@ -10,7 +10,7 @@ import Question from "./components/Question";
 
 const CategoryDetail = () => {
   const dispatch = useDispatch();
-  const category = useSelector((state) => state.categories);
+  const category = useSelector((state) => state.selectedCategory);
   const { id } = useParams();
 
   const QUESTION_KEY = "question ";

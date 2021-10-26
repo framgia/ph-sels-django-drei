@@ -27,6 +27,7 @@ const CategoryList = () => {
   }, [dispatch, page]);
 
   const renderCategories = () => {
+    console.log(categories)
     if (categories.results) {
       return categories.results.map((category) => {
         return (
