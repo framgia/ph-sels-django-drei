@@ -12,7 +12,6 @@ import { getStudentLesson } from "../../redux/actions/student";
 const CategoryDetail = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.selectedCategory);
-  const student_lesson = useSelector((state) => state.students.lesson);
   const { id } = useParams();
   const history = useHistory();
 
@@ -30,10 +29,7 @@ const CategoryDetail = () => {
   useEffect(() => {
     dispatch(getCategory(id));
     dispatch(getStudentLesson(id));
-    if (student_lesson) {
-      history.push("/categories");
-    }
-  }, [dispatch, id, history, student_lesson]);
+  }, [dispatch, id]);
 
   const renderCategory = () => {
     if (category.question) {

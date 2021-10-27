@@ -4,6 +4,7 @@ import { Switch, Router, Route } from "react-router-dom";
 import history from "./history";
 import HomePage from "./pages/Home/HomePage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import ProtectedCourseRoute from "./components/common/ProtectedCourseRoute";
 import SignUpForm from "./pages/Login/SignUpForm";
 import ProfileEditPage from "./pages/Profile/ProfileEditPage";
 import StudentListPage from "./pages/Students/StudentListPage";
@@ -33,7 +34,10 @@ const App = () => {
             component={StudentProfilePage}
           />
           <ProtectedRoute exact path="/categories" component={CategoryList} />
-          <ProtectedRoute path="/categories/:id" component={CategoryDetail} />
+          <ProtectedCourseRoute
+            path="/categories/:id"
+            component={CategoryDetail}
+          />
           <Route path="/signin" component={AuthForm} />
           <Route path="/signup" component={SignUpForm} />
         </Switch>

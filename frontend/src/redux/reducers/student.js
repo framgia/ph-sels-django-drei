@@ -15,9 +15,9 @@ const students = (state = {}, action) => {
     case FOLLOW_STUDENT:
       return { ...action.payload };
     case FETCH_STUDENT_LESSONS:
-      return { ...state, lessons: action.payload };
+      return { lessons: action.payload };
     case FETCH_STUDENT_LESSON:
-      return { ...state, lesson: action.payload };
+      return { lesson: action.payload };
     default:
       return state;
   }

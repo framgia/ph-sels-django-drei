@@ -4,10 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Loading from "../../components/common/Loading";
 import { getCategories } from "../../redux/actions/category";
 import { Link } from "react-router-dom";
-import {
-  getStudentLessons,
-  getStudentLesson,
-} from "../../redux/actions/student";
+import { getStudentLessons } from "../../redux/actions/student";
 const CategoryList = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
@@ -26,10 +23,6 @@ const CategoryList = () => {
     }
     return;
   };
-  const fetchStudentLesson = (id) => {
-    dispatch(getStudentLesson(id));
-  };
-
   useEffect(() => {
     dispatch(getCategories(page));
     dispatch(getStudentLessons());
@@ -46,7 +39,6 @@ const CategoryList = () => {
         to={`/categories/${category.id}`}
         className="ui primary button"
         key={category.id}
-        onClick={fetchStudentLesson(category.id)}
       >
         Start
       </Link>
