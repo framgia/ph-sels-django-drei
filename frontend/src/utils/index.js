@@ -16,4 +16,12 @@ const tempStrFunction = (str) =>
   "https://" + str.substring(31, str.length) &&
   "https://semantic-ui.com/images/avatar/large/justen.jpg";
 
-export { required, sleep, trimQuestion, tempStrFunction };
+const getFromLocalStorage = () => {
+  if (localStorage.getItem("userInfo")) {
+    return JSON.parse(localStorage.getItem("userInfo"));
+  } else {
+    return false;
+  }
+};
+
+export { required, sleep, trimQuestion, tempStrFunction, getFromLocalStorage };

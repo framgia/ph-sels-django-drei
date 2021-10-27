@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import Loading from "../../components/common/Loading";
 import { getCategories } from "../../redux/actions/category";
 import { Link } from "react-router-dom";
+import { getStudentLessons } from "../../redux/actions/student";
 const CategoryList = () => {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
+  const student_lesson = useSelector((state) => state.students.lessons);
   const [page, setPage] = useState(1);
 
   const prevPage = () => {
@@ -21,15 +23,31 @@ const CategoryList = () => {
     }
     return;
   };
-
   useEffect(() => {
     dispatch(getCategories(page));
+    dispatch(getStudentLessons());
   }, [dispatch, page]);
 
+  const renderLessonButton = (category) => {
+    const x = student_lesson.some((lesson) => lesson.category === category.id);
+    return x ? (
+      <button className="ui button disabled" key={category.id}>
+        Course already Taken
+      </button>
+    ) : (
+      <Link
+        to={`/categories/${category.id}`}
+        className="ui primary button"
+        key={category.id}
+      >
+        Start
+      </Link>
+    );
+  };
+
   const renderCategories = () => {
-    console.log(categories)
-    if (categories.results) {
-      return categories.results.map((category) => {
+    if (categories.results && student_lesson) {
+      return categories.results.map((category, index) => {
         return (
           <div
             className="column"
@@ -43,13 +61,8 @@ const CategoryList = () => {
                 <div className="description">
                   <p>{category.description}</p>
                 </div>
+                {renderLessonButton(category)}
               </div>
-              <Link
-                to={`/categories/${category.id}`}
-                className="ui primary button"
-              >
-                Start
-              </Link>
             </div>
           </div>
         );

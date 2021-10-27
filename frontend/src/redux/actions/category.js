@@ -5,34 +5,19 @@ import {
 } from "../actions/types";
 
 import api from "../../api/api";
-const getCategories = (page) => async (dispatch, getState) => {
-  const { userData } = getState().auth;
-  const response = await api.get(`/students/categories/?page=${page}`, {
-    headers: {
-      Authorization: `Bearer ${userData.access}`,
-    },
-  });
 
+const getCategories = (page) => async (dispatch) => {
+  const response = await api.get(`/students/categories/?page=${page}`);
   dispatch({ type: FETCH_CATEGORY_LIST, payload: response.data });
 };
-const getCategory = (id) => async (dispatch, getState) => {
-  const { userData } = getState().auth;
-  const response = await api.get(`/students/categories/${id}`, {
-    headers: {
-      Authorization: `Bearer ${userData.access}`,
-    },
-  });
+const getCategory = (id) => async (dispatch) => {
+  const response = await api.get(`/students/categories/${id}`);
   dispatch({ type: FETCH_CATEGORY, payload: response.data });
 };
 
-const submitAnswer = (id, formValues) => async (dispatch, getState) => {
-  const { userData } = getState().auth;
+const submitAnswer = (id, formValues) => async (dispatch) => {
   api
-    .post(`/students/answers/${id}`, formValues, {
-      headers: {
-        Authorization: `Bearer ${userData.access}`,
-      },
-    })
+    .post(`/students/answers/${id}`, formValues)
     .then((response) => {
       dispatch({ type: SUBMIT_ANSWER, payload: response.data });
     })

@@ -10,28 +10,21 @@ const category = (state = {}, action) => {
         ...state,
         ...action.payload,
       };
-    case FETCH_CATEGORY:
-      return {
-        ...state,
-        ...action.payload,
-      };
     case SUBMIT_ANSWER:
       return action.payload;
     default:
       return state;
   }
 };
-
-const selectedCategory = (state={},action) => {
-
-  switch(action.type){
+const selectedCategory = (state = {}, action) => {
+  switch (action.type) {
     case FETCH_CATEGORY:
       return {
-        ...state,...action.payload,
-      }
+        ...state,
+        ...action.payload,
+      };
     default:
-      return state
+      return state;
   }
-
-}
-export {category,selectedCategory};
+};
+export { category, selectedCategory };

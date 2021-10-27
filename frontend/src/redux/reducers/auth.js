@@ -1,12 +1,12 @@
 import { SIGN_IN, SIGN_OUT } from "../actions/types";
-
-const getFromLocalStorage = () => {
-  if (localStorage.getItem("userInfo")) {
-    return JSON.parse(localStorage.getItem("userInfo"));
-  } else {
-    return false;
-  }
-};
+import { getFromLocalStorage } from "../../utils";
+// const getFromLocalStorage = () => {
+//   if (localStorage.getItem("userInfo")) {
+//     return JSON.parse(localStorage.getItem("userInfo"));
+//   } else {
+//     return false;
+//   }
+// };
 
 const INITIAL_STATE = {
   isLoggedIn: getFromLocalStorage().isLoggedIn,

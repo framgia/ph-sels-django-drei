@@ -2,6 +2,8 @@ import {
   FETCH_STUDENT_LIST,
   FETCH_STUDENT_DETAIL,
   FOLLOW_STUDENT,
+  FETCH_STUDENT_LESSONS,
+  FETCH_STUDENT_LESSON,
 } from "../actions/types";
 
 const students = (state = {}, action) => {
@@ -12,6 +14,10 @@ const students = (state = {}, action) => {
       return { ...action.payload };
     case FOLLOW_STUDENT:
       return { ...action.payload };
+    case FETCH_STUDENT_LESSONS:
+      return { lessons: action.payload };
+    case FETCH_STUDENT_LESSON:
+      return { lesson: action.payload };
     default:
       return state;
   }

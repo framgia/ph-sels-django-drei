@@ -13,7 +13,7 @@ from .models import (
 class StudentLessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentLesson
-        fields = "__all__"
+        fields = ["category"]
 
 
 class StudentQuestionAnsweredSerializer(serializers.ModelSerializer):
