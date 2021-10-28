@@ -11,6 +11,9 @@ import StudentListPage from "./pages/Students/StudentListPage";
 import StudentProfilePage from "./pages/Students/StudentProfilePage";
 import CategoryList from "./pages/Categories/CategoryList";
 import CategoryDetail from "./pages/Categories/CategoryDetail";
+import ResultList from "./pages/Results/ResultList";
+import ResultDetail from "./pages/Results/ResultDetail";
+
 /*
 TODO:
 
@@ -33,6 +36,8 @@ const App = () => {
             path="/students/profile/:id"
             component={StudentProfilePage}
           />
+          <ProtectedRoute exact path="/results" component={ResultList} />
+          <ProtectedCourseRoute path="/results/:id" component={ResultDetail} />
           <ProtectedRoute exact path="/categories" component={CategoryList} />
           <ProtectedCourseRoute
             path="/categories/:id"

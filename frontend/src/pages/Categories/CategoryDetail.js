@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router";
 import Wizard from "./components/WizardForm";
 import { sleep, trimQuestion } from "../../utils";
-import Loading from "../../components/common/Loading";
 import Question from "./components/Question";
 import { getStudentLesson } from "../../redux/actions/student";
-
+import Loading from "../../components/common/Loading";
 const CategoryDetail = () => {
   const dispatch = useDispatch();
-  const category = useSelector((state) => state.selectedCategory);
+  const category = useSelector((state) => state.categories);
+  const lesson = useSelector((state) => state.students.lesson);
   const { id } = useParams();
   const history = useHistory();
 
@@ -29,7 +29,7 @@ const CategoryDetail = () => {
   useEffect(() => {
     dispatch(getCategory(id));
     dispatch(getStudentLesson(id));
-  }, [dispatch, id]);
+  }, [dispatch, id, history, lesson]);
 
   const renderCategory = () => {
     if (category.question) {

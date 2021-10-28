@@ -11,7 +11,7 @@ api.interceptors.request.use(
       ? state.auth.userData.access
       : null;
     config.headers = {
-      Authorization: token && `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     };
     return config;
   },
