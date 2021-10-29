@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Navbar from "../../components/common/Navbar";
 import {
   getStudentDetail,
   followStudent,
@@ -51,12 +50,7 @@ const StudentProfilePage = () => {
       <Loading />
     );
   };
-  return (
-    <div>
-      <Navbar />
-      {renderProfile()}
-    </div>
-  );
+  return <div>{renderProfile()}</div>;
 };
 
 export default StudentProfilePage;

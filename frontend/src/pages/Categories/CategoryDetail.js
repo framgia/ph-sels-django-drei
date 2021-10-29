@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Navbar from "../../components/common/Navbar";
 import { getCategory, submitAnswer } from "../../redux/actions/category";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router";
@@ -11,7 +10,6 @@ import Loading from "../../components/common/Loading";
 const CategoryDetail = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.categories);
-  const lesson = useSelector((state) => state.students.lesson);
   const { id } = useParams();
   const history = useHistory();
 
@@ -29,7 +27,7 @@ const CategoryDetail = () => {
   useEffect(() => {
     dispatch(getCategory(id));
     dispatch(getStudentLesson(id));
-  }, [dispatch, id, history, lesson]);
+  }, [dispatch, id, history]);
 
   const renderCategory = () => {
     if (category.question) {
@@ -56,7 +54,6 @@ const CategoryDetail = () => {
   };
   return (
     <div>
-      <Navbar />
       <div
         className="ui grid center aligned middle aligned"
         style={{ marginTop: "100px" }}

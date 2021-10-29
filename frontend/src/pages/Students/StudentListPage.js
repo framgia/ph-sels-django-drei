@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
-import Navbar from "../../components/common/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentList } from "../../redux/actions/student";
 import "../../index.css";
@@ -47,7 +46,6 @@ const StudentListPage = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="ui items">{renderStudents()}</div>
     </div>
   );

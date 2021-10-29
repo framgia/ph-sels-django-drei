@@ -1,3 +1,4 @@
+import { useLocation } from "react-router";
 const required = (value) =>
   value ? undefined : <b style={{ color: "red" }}>This field is required</b>;
 
@@ -23,5 +24,15 @@ const getFromLocalStorage = () => {
     return false;
   }
 };
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
-export { required, sleep, trimQuestion, tempStrFunction, getFromLocalStorage };
+export {
+  required,
+  sleep,
+  trimQuestion,
+  tempStrFunction,
+  getFromLocalStorage,
+  useQuery,
+};

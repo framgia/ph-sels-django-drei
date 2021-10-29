@@ -1,9 +1,10 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../redux/actions/user";
 import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const logout = () => {
     dispatch(signOut());
   };
@@ -26,6 +27,11 @@ const Navbar = () => {
         <NavLink to="/profile" className="ui item">
           Profile
         </NavLink>
+        {auth.userData?.is_admin ? (
+          <NavLink to="/admin/categories" className="ui item">
+            Admin
+          </NavLink>
+        ) : null}
         <button className="ui button primary" onClick={logout}>
           Logout
         </button>

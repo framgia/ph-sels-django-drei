@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Navbar from "../../components/common/Navbar";
 import { Field, Form } from "react-final-form";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails, updateUserDetails } from "../../redux/actions/user";
@@ -37,7 +36,6 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <Navbar />
       <Form onSubmit={handleSubmit} validate={validatePasswordMatch}>
         {({ handleSubmit }) => (
           <div>

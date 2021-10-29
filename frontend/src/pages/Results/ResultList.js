@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/common/Loading";
-import Navbar from "../../components/common/Navbar";
 import { getStudentLessons } from "../../redux/actions/student";
 import Lesson from "../../components/common/Lesson";
 import LessonButton from "../../components/common/LessonButton";
@@ -31,7 +30,6 @@ const ResultList = () => {
   };
   return (
     <div>
-      <Navbar />
       <h4 className="ui header">Results</h4>
       <div className="ui grid">
         <div className="ui three column row"> {renderStudentLessons()}</div>
