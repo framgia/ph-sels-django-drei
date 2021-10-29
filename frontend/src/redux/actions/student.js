@@ -4,6 +4,7 @@ import {
   FETCH_STUDENT_LIST,
   FETCH_STUDENT_DETAIL,
   FOLLOW_STUDENT,
+  UNFOLLOW_STUDENT,
   FETCH_STUDENT_LESSONS,
   FETCH_STUDENT_LESSON,
 } from "./types";
@@ -37,6 +38,10 @@ const followStudent = (id) => async (dispatch) => {
   const response = await api.post(`/students/follow/${id}`, null);
   dispatch({ type: FOLLOW_STUDENT, payload: response.data });
 };
+const unfollowStudent = (id) => async (dispatch) => {
+  const response = await api.post(`/students/follow/${id}`, null);
+  dispatch({ type: UNFOLLOW_STUDENT, payload: response.data });
+};
 
 const getStudentLessons = () => async (dispatch) => {
   api.get(`/students/lessons/`).then((response) => {
@@ -56,6 +61,7 @@ export {
   getStudentList,
   getStudentDetail,
   followStudent,
+  unfollowStudent,
   getStudentLessons,
   getStudentLesson,
 };

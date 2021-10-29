@@ -20,6 +20,9 @@ const Navbar = () => {
         Categories
       </NavLink>
       <div className="right menu">
+        <NavLink to="/results" className="ui item">
+          Results
+        </NavLink>
         <NavLink to="/profile" className="ui item">
           Profile
         </NavLink>

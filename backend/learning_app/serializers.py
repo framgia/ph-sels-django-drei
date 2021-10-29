@@ -10,10 +10,18 @@ from .models import (
 )
 
 
-class StudentLessonSerializer(serializers.ModelSerializer):
+class StudentLessonResultSerializer(serializers.ModelSerializer):
+    is_correct_answer = serializers.SerializerMethodField()
+    category = serializers.StringRelatedField()
+    question = serializers.StringRelatedField()
+    answer = serializers.StringRelatedField()
+
     class Meta:
-        model = StudentLesson
-        fields = ["category"]
+        model = StudentQuestionAnswered
+        fields = ["id", "category", "question", "answer", "is_correct_answer"]
+
+    def get_is_correct_answer(self, obj):
+        return obj.answer.value == obj.question.choice.get(is_answer=True).value
 
 
 class StudentQuestionAnsweredSerializer(serializers.ModelSerializer):
@@ -50,6 +58,14 @@ class CategoryDetailSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
+        fields = "__all__"
+
+
+class StudentLessonSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
+
+    class Meta:
+        model = StudentLesson
         fields = "__all__"
 
 

@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import Navbar from "../../components/common/Navbar";
-import { getStudentDetail, followStudent } from "../../redux/actions/student";
+import {
+  getStudentDetail,
+  followStudent,
+  unfollowStudent,
+} from "../../redux/actions/student";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import Loading from "../../components/common/Loading";
@@ -18,7 +22,7 @@ const StudentProfilePage = () => {
   }, [dispatch, id]);
 
   const followStudentAction = () => {
-    dispatch(followStudent(id));
+    is_following ? dispatch(unfollowStudent(id)) : dispatch(followStudent(id));
   };
 
   const renderProfile = () => {

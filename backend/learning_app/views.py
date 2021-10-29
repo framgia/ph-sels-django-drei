@@ -20,9 +20,20 @@ from .serializers import (
     CategorySerializer,
     CategoryDetailSerializer,
     StudentQuestionAnsweredSerializer,
+    StudentLessonResultSerializer,
 )
 from .pagination import CategoryListPagination, StudentListPagination
 from rest_framework.response import Response
+
+
+class StudentLessonResultView(generics.ListAPIView):
+    serializer_class = StudentLessonResultSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return StudentQuestionAnswered.objects.filter(
+            student=self.request.user, category_id=self.kwargs.get("pk")
+        )
 
 
 class StudentLessonViewByCategory(APIView):
@@ -69,7 +80,6 @@ class StudentQuestionAnsweredView(generics.CreateAPIView):
         category_id = self.request.data.get("category")
         question_count = Question.objects.filter(category=category_id).count()
         if len(answers) != question_count:
-            print(question_count)
             raise ValidationError({"error": "You must supply all the answers"})
 
         # create bulk answers on
@@ -102,7 +112,7 @@ class CategoryDetailView(generics.RetrieveAPIView):
 
 
 class CategoryListView(generics.ListAPIView):
-    queryset = Category.objects.all().order_by("id")
+    queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [
         IsAuthenticated,
@@ -117,7 +127,6 @@ class StudentFollowView(APIView):
     ]
 
     def get(self, request, *args, **kwargs):
-        print(kwargs.get("pk"))
         try:
             student_follow_obj = StudentFollowInformation.objects.get(
                 student_id=kwargs.get("pk"), follower=request.user

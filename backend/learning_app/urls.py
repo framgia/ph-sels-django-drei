@@ -7,6 +7,7 @@ from .views import (
     StudentQuestionAnsweredView,
     StudentLessonView,
     StudentLessonViewByCategory,
+    StudentLessonResultView,
 )
 
 urlpatterns = [
@@ -31,5 +32,10 @@ urlpatterns = [
         "lessons/<int:pk>",
         StudentLessonViewByCategory.as_view(),
         name="retrieve-student-lesson",
+    ),
+    path(
+        "lessons/results/<int:pk>",
+        StudentLessonResultView.as_view(),
+        name="retrieve-student-lesson-result",
     ),
 ]

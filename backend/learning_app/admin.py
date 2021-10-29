@@ -9,6 +9,10 @@ from .models import (
 )
 
 # Register your models here.
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ("category", "description")
+
+
 class ChoiceAdmin(admin.ModelAdmin):
     list_display = ("question", "value", "is_answer")
 
@@ -23,7 +27,7 @@ class StudentLessonAdmin(admin.ModelAdmin):
 
 admin.site.register(StudentFollowInformation)
 admin.site.register(Category)
-admin.site.register(Question)
+admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice, ChoiceAdmin)
 admin.site.register(StudentQuestionAnswered, StudentQuestionAnsweredAdmin)
 admin.site.register(StudentLesson, StudentLessonAdmin)
