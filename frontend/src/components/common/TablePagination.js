@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-const AdminCategoryFooter = ({ page, setPage }) => {
-  const pageData = useSelector((state) => state.adminCategories.page);
+const TablePagination = ({ page, setPage, pageData, children }) => {
   const [pages, setPages] = useState([]);
 
   const nextPage = () => {
@@ -76,16 +74,11 @@ const AdminCategoryFooter = ({ page, setPage }) => {
               <i className="right chevron icon"></i>
             </Link>
           </div>
-          <Link
-            className="ui small primary button"
-            to={`/admin/categories/add`}
-          >
-            Add Category
-          </Link>
+          {children && children}
         </th>
       </tr>
     </tfoot>
   );
 };
 
-export default AdminCategoryFooter;
+export default TablePagination;

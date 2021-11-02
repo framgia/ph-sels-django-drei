@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AdminCategoryFooter from "./AdminCategoryFooter";
+import TablePagination from "../../../../components/common/TablePagination";
+import { useSelector } from "react-redux";
+
 const AdminCategoryTable = ({ categories, page, setPage }) => {
+  const pageData = useSelector((state) => state.adminCategories.page);
   return (
     <table className="ui celled table">
       <thead>
@@ -36,7 +39,11 @@ const AdminCategoryTable = ({ categories, page, setPage }) => {
             );
           })}
       </tbody>
-      <AdminCategoryFooter page={page} setPage={setPage} />
+      <TablePagination page={page} setPage={setPage} pageData={pageData}>
+        <Link className="ui small primary button" to={`/admin/categories/add`}>
+          Add Category
+        </Link>
+      </TablePagination>
     </table>
   );
 };
