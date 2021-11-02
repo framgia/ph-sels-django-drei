@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Navbar from "../../components/common/Navbar";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getLessonResult } from "../../redux/actions/result";
@@ -55,7 +54,6 @@ const ResultDetail = () => {
 
   return (
     <div className="ui container">
-      <Navbar />
       <h4 className=" ui header">{results[0] && results[0].category}</h4>
       <h4 className=" ui header">
         Results: {resultCount()} of {results.length}{" "}

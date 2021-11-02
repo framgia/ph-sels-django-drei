@@ -7,6 +7,8 @@ import reduxThunk from "redux-thunk";
 
 import reducers from "./redux/reducers";
 import App from "./App";
+import { Router } from "react-router";
+import history from "./history";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(
@@ -15,7 +17,9 @@ export const store = createStore(
 );
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router history={history}>
+      <App />
+    </Router>
   </Provider>,
   document.querySelector("#root")
 );

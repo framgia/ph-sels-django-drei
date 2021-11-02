@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../../components/common/Navbar";
 import { useSelector } from "react-redux";
 import Pagination from "./components/Pagination";
 import { getStudentLessons } from "../../redux/actions/student";
@@ -48,7 +47,6 @@ const CategoryList = () => {
 
   return (
     <div>
-      <Navbar />
       <h4 className="ui header">Categories</h4>
       <div className="ui grid">
         <div className="ui three column row"> {renderCategoryList()}</div>

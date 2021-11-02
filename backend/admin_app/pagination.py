@@ -1,9 +1,9 @@
-from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 
-class CategoryListPagination(PageNumberPagination):
-    page_size = 9
+class CategoryTablePagination(PageNumberPagination):
+    page_size = 5
 
     def get_paginated_response(self, data):
         return Response(
@@ -15,7 +15,3 @@ class CategoryListPagination(PageNumberPagination):
                 "results": data,
             }
         )
-
-
-class StudentListPagination(LimitOffsetPagination):
-    default_limit = 20
