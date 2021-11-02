@@ -33,6 +33,7 @@ class Question(models.Model):
         Category, on_delete=models.CASCADE, related_name="question"
     )
     description = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.description
@@ -40,7 +41,7 @@ class Question(models.Model):
 
 class Choice(models.Model):
     question = models.ForeignKey(
-        Question, on_delete=models.CASCADE, related_name="choice"
+        Question, on_delete=models.CASCADE, related_name="choices"
     )
     value = models.CharField(max_length=50)
     is_answer = models.BooleanField(default=False)
