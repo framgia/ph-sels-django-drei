@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
-const TablePagination = ({ page, setPage, pageData, children }) => {
+const TablePagination = ({ page, setPage, pageData, pageLink, children }) => {
   const [pages, setPages] = useState([]);
 
   const nextPage = () => {
@@ -17,10 +17,6 @@ const TablePagination = ({ page, setPage, pageData, children }) => {
     return;
   };
 
-  const pageLink = () => {
-    return "/admin/categories";
-  };
-
   const pageNumbers = useCallback(() => {
     const pageNum = [];
     let total_pages = pageData.total_pages;
@@ -29,7 +25,7 @@ const TablePagination = ({ page, setPage, pageData, children }) => {
       pageNum.push(
         <Link
           to={{
-            pathname: pageLink(),
+            pathname: pageLink,
             search: `page=${i}`,
           }}
           className={i === page ? "item active" : "item"}
@@ -41,7 +37,7 @@ const TablePagination = ({ page, setPage, pageData, children }) => {
       );
     }
     return pageNum;
-  }, [pageData, setPage, page]);
+  }, [pageData, setPage, page, pageLink]);
 
   useEffect(() => {
     setPages(pageNumbers());
@@ -54,7 +50,7 @@ const TablePagination = ({ page, setPage, pageData, children }) => {
           <div className="ui right floated pagination menu">
             <Link
               to={{
-                pathname: pageLink(),
+                pathname: pageLink,
                 search: `page=${pageData.previous ? page - 1 : page}`,
               }}
               className="icon item"
@@ -65,7 +61,7 @@ const TablePagination = ({ page, setPage, pageData, children }) => {
             {pageData?.total_pages ? pages : null}
             <Link
               to={{
-                pathname: pageLink(),
+                pathname: pageLink,
                 search: `page=${pageData.next ? page + 1 : page}`,
               }}
               className="icon item"

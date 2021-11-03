@@ -19,6 +19,9 @@ import Navbar from "./components/common/Navbar";
 import AdminCategoryList from "./pages/Admin/Categories/AdminCategoryList";
 import AdminCategoryDetail from "./pages/Admin/Categories/AdminCategoryDetail";
 import AdminCategoryAdd from "./pages/Admin/Categories/AdminCategoryAdd";
+import AdminQuestionAdd from "./pages/Admin/Questions/AdminQuestionAdd";
+import AdminQuestionList from "./pages/Admin/Questions/AdminQuestionList";
+import AdminQuestionEdit from "./pages/Admin/Questions/AdminQuestionEdit";
 /*
 TODO:
 
@@ -27,7 +30,9 @@ Create email format validation on front end
 MinValue validation for sign up fields in front-end
 No frontend success message yet on api calls
 
-What if i modify the localStorage to bypass authentication
+Admin Category Page list pagenumber pagination with pills
+Unique together validation in question
+Reuse admin category list into admin question list
 */
 const App = () => {
   const location = useLocation();
@@ -64,6 +69,20 @@ const App = () => {
           component={AdminCategoryAdd}
         />
         <AdminOnlyRoute
+          path="/admin/categories/:id/question/add"
+          component={AdminQuestionAdd}
+        />
+        <AdminOnlyRoute
+          exact
+          path="/admin/categories/:categoryId/question/edit/:questionId"
+          component={AdminQuestionEdit}
+        />
+        <AdminOnlyRoute
+          path="/admin/categories/:id/questions"
+          component={AdminQuestionList}
+        />
+        <AdminOnlyRoute
+          exact
           path="/admin/categories/:id"
           component={AdminCategoryDetail}
         />

@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import TablePagination from "../../../../components/common/TablePagination";
 import { useSelector } from "react-redux";
-
 const AdminCategoryTable = ({ categories, page, setPage }) => {
   const pageData = useSelector((state) => state.adminCategories.page);
   return (
@@ -28,10 +27,16 @@ const AdminCategoryTable = ({ categories, page, setPage }) => {
                   <td data-label="Description">{category.description}</td>
                   <td data-label="Action">
                     <Link
-                      to={`/admin/categories/${category.id}`}
-                      className="ui button primary"
+                      to={`/admin/categories/${category.id}/question/add`}
+                      className="ui small basic primary button"
                     >
                       Add Question
+                    </Link>
+                    <Link
+                      to={`/admin/categories/${category.id}/questions`}
+                      className="ui small basic button"
+                    >
+                      View Questions
                     </Link>
                   </td>
                 </tr>
