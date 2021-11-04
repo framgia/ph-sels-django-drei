@@ -5,6 +5,7 @@ from .views import (
     AdminListCreateQuestionView,
     AdminRetrieveUpdateQuestionView,
     AdminDeleteQuestionView,
+    AdminListCreateView,
 )
 
 
@@ -33,5 +34,10 @@ urlpatterns = [
         "categories/<int:category>/question/<int:id>/delete",
         AdminDeleteQuestionView.as_view(),
         name="delete-question-admin",
+    ),
+    path(
+        "list/",
+        AdminListCreateView.as_view(),
+        name="list-create-admin",
     ),
 ]

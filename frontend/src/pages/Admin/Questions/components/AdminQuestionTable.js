@@ -10,7 +10,6 @@ const AdminQuestionTable = ({
 }) => {
   const pageData = useSelector((state) => state.adminQuestions.page);
   const pageLink = `/admin/categories/${categoryId}/questions`;
-
   return (
     <div>
       <table className="ui celled table">
@@ -46,8 +45,8 @@ const AdminQuestionTable = ({
           pageData={pageData}
           pageLink={pageLink}
         >
-          <Link className="ui small primary button" to={`/admin/categories/`}>
-            Go back
+          <Link className="ui small primary button" to={`/admin`}>
+            Go Back
           </Link>
         </TablePagination>
       </table>

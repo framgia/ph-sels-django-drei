@@ -1,12 +1,23 @@
 from django.core.exceptions import ValidationError
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from rest_framework.serializers import Serializer
-from .serializers import AdminCategorySerializer, AdminQuestionSerializer
-from learning_app.models import Category, Question, Choice
+from .serializers import (
+    AdminCategorySerializer,
+    AdminQuestionSerializer,
+    AdminSerializer,
+)
+from learning_app.models import Category, Question
 from .pagination import CategoryTablePagination
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from authentication_app.models import Student
+
+
+class AdminListCreateView(generics.ListCreateAPIView):
+    queryset = Student.objects.filter(is_superuser=True)
+    serializer_class = AdminSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    pagination_class = CategoryTablePagination
 
 
 class MultipleFieldLookupMixin(object):

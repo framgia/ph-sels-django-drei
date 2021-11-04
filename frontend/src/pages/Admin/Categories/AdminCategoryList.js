@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import AdminCategoryTable from "./components/AdminCategoryTable";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategoryList } from "../../../redux/actions/admin";
-import { useQuery } from "../../../utils";
 
 const AdminCategoryList = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.adminCategories);
-  const query = useQuery();
-  const [page, setPage] = useState(parseInt(query.get("page")) || 1);
+
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     dispatch(getCategoryList(page));

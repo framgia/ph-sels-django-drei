@@ -22,6 +22,7 @@ import AdminCategoryAdd from "./pages/Admin/Categories/AdminCategoryAdd";
 import AdminQuestionAdd from "./pages/Admin/Questions/AdminQuestionAdd";
 import AdminQuestionList from "./pages/Admin/Questions/AdminQuestionList";
 import AdminQuestionEdit from "./pages/Admin/Questions/AdminQuestionEdit";
+import AdminPage from "./pages/Admin/AdminPage";
 /*
 TODO:
 
@@ -32,7 +33,9 @@ No frontend success message yet on api calls
 
 Admin Category Page list pagenumber pagination with pills
 Unique together validation in question
-Reuse admin category list into admin question list
+Reuse admin category list into admin question list 
+Refactor Question ADD/EDIT FORM
+Refactor pagination for list
 */
 const App = () => {
   const location = useLocation();
@@ -58,7 +61,7 @@ const App = () => {
           path="/categories/:id"
           component={CategoryDetail}
         />
-
+        <AdminOnlyRoute exact path="/admin" component={AdminPage} />
         <AdminOnlyRoute
           exact
           path="/admin/categories/"
