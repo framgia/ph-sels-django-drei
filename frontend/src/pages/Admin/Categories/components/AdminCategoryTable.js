@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import TablePagination from "../../../../components/common/TablePagination";
 import { useSelector } from "react-redux";
 const AdminCategoryTable = ({ categories, page, setPage }) => {
+  const pageLink = "/admin";
   const pageData = useSelector((state) => state.adminCategories.page);
+
   return (
     <table className="ui celled table">
       <thead>
@@ -44,7 +46,12 @@ const AdminCategoryTable = ({ categories, page, setPage }) => {
             );
           })}
       </tbody>
-      <TablePagination page={page} setPage={setPage} pageData={pageData}>
+      <TablePagination
+        page={page}
+        setPage={setPage}
+        pageData={pageData}
+        pageLink={pageLink}
+      >
         <Link className="ui small primary button" to={`/admin/categories/add`}>
           Add Category
         </Link>

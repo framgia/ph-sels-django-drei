@@ -15,16 +15,17 @@ const Question = ({ question, QUESTION_KEY, length, index }) => {
           </div>
           <h2 className="ui header">{question.description}</h2>
           <FieldError name={`${QUESTION_KEY + question.id}`} />
-          {question.choice.map((choice) => {
-            return (
-              <Choice
-                choice={choice}
-                QUESTION_KEY={QUESTION_KEY}
-                questionId={question.id}
-                key={choice.id}
-              />
-            );
-          })}
+          {question.choices &&
+            question.choices.map((choice) => {
+              return (
+                <Choice
+                  choice={choice}
+                  QUESTION_KEY={QUESTION_KEY}
+                  questionId={question.id}
+                  key={choice.id}
+                />
+              );
+            })}
         </div>
       </Wizard.Page>
     </div>

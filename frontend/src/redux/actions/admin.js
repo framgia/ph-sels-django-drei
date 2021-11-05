@@ -9,6 +9,7 @@ import {
   ADMIN_QUESTION_RETRIEVE,
   ADMIN_QUESTION_UPDATE,
   ADMIN_QUESTION_DELETE,
+  ADMIN_USER_LIST,
 } from "./types";
 
 import api from "../../api/api";
@@ -91,6 +92,15 @@ const deleteQuestion = (categoryId, questionId) => async (dispatch) => {
   );
   dispatch({ type: ADMIN_QUESTION_DELETE, payload: response.data });
 };
+
+const fetchAdminList = (page) => async (dispatch) => {
+  const response = await api.get(`/admin/list/`, {
+    params: {
+      page: page,
+    },
+  });
+  dispatch({ type: ADMIN_USER_LIST, payload: response.data });
+};
 export {
   getCategoryList,
   getCategory,
@@ -102,4 +112,5 @@ export {
   getQuestion,
   updateQuestion,
   deleteQuestion,
+  fetchAdminList,
 };

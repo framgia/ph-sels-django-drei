@@ -6,7 +6,6 @@ import Wizard from "./components/WizardForm";
 import { sleep, trimQuestion } from "../../utils";
 import Question from "./components/Question";
 import { getStudentLesson } from "../../redux/actions/student";
-import Loading from "../../components/common/Loading";
 const CategoryDetail = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.categories);
@@ -49,7 +48,7 @@ const CategoryDetail = () => {
         <>None</>
       );
     } else {
-      return <Loading />;
+      return <>None</>;
     }
   };
   return (

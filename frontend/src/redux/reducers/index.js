@@ -9,6 +9,7 @@ import {
   selectedCategory,
   selectedQuestion,
   questions,
+  adminUserList,
 } from "./admin";
 export default combineReducers({
   auth: auth,
@@ -20,4 +21,5 @@ export default combineReducers({
   adminSelectedCategory: selectedCategory,
   adminQuestions: questions,
   adminSelectedQuestion: selectedQuestion,
+  adminUserList: adminUserList,
 });

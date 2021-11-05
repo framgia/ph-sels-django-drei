@@ -28,11 +28,15 @@ const Navbar = () => {
           Profile
         </NavLink>
         {auth.userData?.is_admin ? (
-          <NavLink to="/admin/categories" className="ui item">
+          <NavLink to="/admin" className="ui item">
             Admin
           </NavLink>
         ) : null}
-        <button className="ui button primary" onClick={logout}>
+        <button
+          className="ui button item"
+          style={{ color: "red" }}
+          onClick={logout}
+        >
           Logout
         </button>
       </div>

@@ -8,6 +8,7 @@ import {
   ADMIN_ADD_QUESTION,
   ADMIN_QUESTION_RETRIEVE,
   ADMIN_QUESTION_UPDATE,
+  ADMIN_USER_LIST,
 } from "../actions/types";
 import _ from "lodash";
 
@@ -61,4 +62,22 @@ const selectedQuestion = (state = {}, action) => {
   }
 };
 
-export { categories, selectedCategory, selectedQuestion, questions };
+const adminUserList = (state = { page: {} }, action) => {
+  switch (action.type) {
+    case ADMIN_USER_LIST:
+      return {
+        page: _.omit(action.payload, "results"),
+        admins: action.payload.results,
+      };
+    default:
+      return state;
+  }
+};
+
+export {
+  categories,
+  selectedCategory,
+  selectedQuestion,
+  questions,
+  adminUserList,
+};

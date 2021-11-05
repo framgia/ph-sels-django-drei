@@ -13,7 +13,6 @@ import {
 } from "../../../redux/actions/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-
 import Modal from "../../../components/common/Modal";
 
 const AdminQuestionEdit = () => {
@@ -44,7 +43,6 @@ const AdminQuestionEdit = () => {
 
   const renderInitialAnswer = () => {
     let answer = "";
-
     selectedQuestion.choices &&
       selectedQuestion.choices.map((choice, index) => {
         if (choice.is_answer) {
@@ -52,7 +50,6 @@ const AdminQuestionEdit = () => {
         }
         return answer;
       });
-
     return answer;
   };
   const popValues = (index, values, fields) => {

@@ -1,34 +1,34 @@
 import {
   FETCH_USER_DETAILS,
-  UPDATE_USER_DETAILS,
   FETCH_STUDENT_LIST,
   FETCH_STUDENT_DETAIL,
   FOLLOW_STUDENT,
   UNFOLLOW_STUDENT,
   FETCH_STUDENT_LESSONS,
   FETCH_STUDENT_LESSON,
+  FETCH_STUDENT_ACTIVITYLOG,
 } from "./types";
 import api from "../../api/api";
+
 const getUserDetails = (id) => async (dispatch, getState) => {
   const { userData } = getState().auth;
   const response = await api.get(`/profile/${id ? id : userData.user_id}/`);
   dispatch({ type: FETCH_USER_DETAILS, payload: response.data });
 };
 
-const updateUserDetails = (formValues) => async (dispatch, getState) => {
-  const { userData } = getState().auth;
-  const response = await api.patch(`/profile/${userData.user_id}/`, formValues);
-  dispatch({ type: UPDATE_USER_DETAILS, payload: response.data });
-};
-
-const getStudentList = (limit, offset) => async (dispatch) => {
+const getStudentList = (limit, offset, student) => async (dispatch) => {
   const response = await api.get("/students/", {
     params: {
       limit: limit,
       offset: offset,
+      search: student,
     },
   });
-  dispatch({ type: FETCH_STUDENT_LIST, payload: response.data });
+
+  setTimeout(
+    () => dispatch({ type: FETCH_STUDENT_LIST, payload: response.data }),
+    500
+  );
 };
 const getStudentDetail = (id) => async (dispatch) => {
   const response = await api.get(`/students/follow/${id}`);
@@ -55,13 +55,19 @@ const getStudentLesson = (id) => async (dispatch) => {
   });
 };
 
+const getStudentActivityLog = (id) => async (dispatch) => {
+  api.get(`students/${id}/logs`).then((response) => {
+    dispatch({ type: FETCH_STUDENT_ACTIVITYLOG, payload: response.data });
+  });
+};
+
 export {
   getUserDetails,
-  updateUserDetails,
   getStudentList,
   getStudentDetail,
   followStudent,
   unfollowStudent,
   getStudentLessons,
   getStudentLesson,
+  getStudentActivityLog,
 };

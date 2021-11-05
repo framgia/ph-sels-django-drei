@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStudentList } from "../../redux/actions/student";
 import "../../index.css";
 import Loading from "../../components/common/Loading";
-import StudentList from "./components/StudentList";
+import Student from "./components/Student";
+import SearchStudent from "./components/SearchStudent";
 
 const StudentListPage = () => {
   const students = useSelector((state) => state.students);
   const observer = useRef("");
   const [limit, setLimit] = useState(10);
   const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState("");
+
+  const [debounceSearch, setDebounceSearch] = useState(searchText);
 
   //Logic to observe dom for the last item
   const lastStudentCallBack = useCallback((node) => {
@@ -23,20 +27,27 @@ const StudentListPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getStudentList(limit));
-  }, [dispatch, limit]);
+    dispatch(getStudentList(limit, 0, debounceSearch));
+  }, [dispatch, limit, debounceSearch]);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebounceSearch(() => searchText);
+    }, 500);
+    return () => clearTimeout(timerId);
+  }, [searchText]);
 
   const renderStudents = () => {
     if (students.results) {
       return students.results.map((student, index) => {
         return students.results.length === index + 1 && students.next ? (
-          <StudentList
+          <Student
             student={student}
             callback={lastStudentCallBack}
             key={student.id}
           />
         ) : (
-          <StudentList student={student} key={student.id} />
+          <Student student={student} key={student.id} />
         );
       });
     } else {
@@ -45,8 +56,20 @@ const StudentListPage = () => {
   };
 
   return (
-    <div>
-      <div className="ui items">{renderStudents()}</div>
+    <div className="ui grid">
+      <div className="row">
+        <div className="column">
+          <SearchStudent
+            searchText={searchText}
+            setSearchText={setSearchText}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="ui five column grid link doubling cards">
+          {renderStudents()}
+        </div>
+      </div>
     </div>
   );
 };

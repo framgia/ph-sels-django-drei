@@ -1,12 +1,13 @@
 import React from "react";
-import AuthForm from "./pages/Login/AuthForm";
+import "semantic-ui-css/semantic.min.css";
 import { Switch, Route, useLocation } from "react-router-dom";
+import LoginPage from "./pages/Login/LoginPage";
+import SignupPage from "./pages/Login/SignupPage";
 import HomePage from "./pages/Home/HomePage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import ProtectedCourseRoute from "./components/common/ProtectedCourseRoute";
 import AdminOnlyRoute from "./components/common/AdminOnlyRoute";
-import SignUpForm from "./pages/Login/SignUpForm";
-import ProfileEditPage from "./pages/Profile/ProfileEditPage";
+import ProfilePage from "./pages/Profile/ProfilePage";
 import StudentListPage from "./pages/Students/StudentListPage";
 import StudentProfilePage from "./pages/Students/StudentProfilePage";
 import CategoryList from "./pages/Categories/CategoryList";
@@ -22,6 +23,7 @@ import AdminCategoryAdd from "./pages/Admin/Categories/AdminCategoryAdd";
 import AdminQuestionAdd from "./pages/Admin/Questions/AdminQuestionAdd";
 import AdminQuestionList from "./pages/Admin/Questions/AdminQuestionList";
 import AdminQuestionEdit from "./pages/Admin/Questions/AdminQuestionEdit";
+import AdminPage from "./pages/Admin/AdminPage";
 /*
 TODO:
 
@@ -32,7 +34,9 @@ No frontend success message yet on api calls
 
 Admin Category Page list pagenumber pagination with pills
 Unique together validation in question
-Reuse admin category list into admin question list
+Reuse admin category list into admin question list 
+Refactor Question ADD/EDIT FORM
+Refactor pagination for list
 */
 const App = () => {
   const location = useLocation();
@@ -45,7 +49,7 @@ const App = () => {
       )}
       <Switch>
         <ProtectedRoute exact path="/" component={HomePage} />
-        <ProtectedRoute path="/profile" component={ProfileEditPage} />
+        <ProtectedRoute path="/profile" component={ProfilePage} />
         <ProtectedRoute exact path="/students" component={StudentListPage} />
         <ProtectedRoute
           path="/students/profile/:id"
@@ -58,7 +62,7 @@ const App = () => {
           path="/categories/:id"
           component={CategoryDetail}
         />
-
+        <AdminOnlyRoute exact path="/admin" component={AdminPage} />
         <AdminOnlyRoute
           exact
           path="/admin/categories/"
@@ -86,8 +90,8 @@ const App = () => {
           path="/admin/categories/:id"
           component={AdminCategoryDetail}
         />
-        <Route path="/signin" component={AuthForm} />
-        <Route path="/signup" component={SignUpForm} />
+        <Route path="/signin" component={LoginPage} />
+        <Route path="/signup" component={SignupPage} />
       </Switch>
     </div>
   );
