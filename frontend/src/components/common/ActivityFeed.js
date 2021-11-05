@@ -1,43 +1,25 @@
 import React from "react";
 
-const ActivityFeed = () => {
-  return (
-    <div className="ui feed">
-      <div className="event">
-        <div className="label">
-          <img src="/images/avatar/small/jenny.jpg" alt="" />
-        </div>
-        <div className="content">
-          <div className="date">3 days ago</div>
-          <div className="summary">
-            You added Jenny Hess to your coworker group.
-          </div>
-        </div>
-      </div>
-      <div className="event">
-        <div className="label">
-          <img src="/images/avatar/small/jenny.jpg" alt="" />
-        </div>
-        <div className="content">
-          <div className="date">3 days ago</div>
-          <div className="summary">
-            You added Jenny Hess to your coworker group.
-          </div>
-        </div>
-      </div>
-      <div className="event">
-        <div className="label">
-          <img src="/images/avatar/small/jenny.jpg" alt="" />
-        </div>
-        <div className="content">
-          <div className="date">3 days ago</div>
-          <div className="summary">
-            You added Jenny Hess to your coworker group.
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+import ActivityLog from "./ActivityLog";
+
+const ActivityFeed = ({ activityLogs, avatar, user_id }) => {
+  const renderActivityLog = () => {
+    if (activityLogs && activityLogs.length) {
+      return activityLogs.map((log, index) => (
+        <ActivityLog
+          log={log}
+          index={index}
+          avatar={avatar}
+          user_id={user_id}
+          key={index}
+        />
+      ));
+    } else {
+      return <React.Fragment>No Logs yet</React.Fragment>;
+    }
+  };
+
+  return <div className="ui feed">{renderActivityLog()}</div>;
 };
 
 export default ActivityFeed;

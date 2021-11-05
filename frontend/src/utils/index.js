@@ -54,7 +54,8 @@ const timeSince = (dateObj) => {
     if (interval > 1) {
       return Math.floor(interval) + " minutes ago";
     }
-    return Math.floor(seconds) + " seconds ago";
+    // return Math.floor(seconds) + " seconds ago";
+    return " just now";
   }
   const result = fromNow(date);
 
