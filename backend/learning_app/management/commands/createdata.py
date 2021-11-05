@@ -10,13 +10,12 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         fake = Faker()
 
-        for i in range(0, 10):
-            obj = Category.objects.create(
-                title=fake.word(), description=fake.sentence()
-            )
-            for i in range(0, 3):
-                question = Question.objects.create(
-                    category=obj, description=fake.sentence()
-                )
-                for i in range(0, 3):
-                    Choice.objects.create(question=question, value=fake.word())
+        for i in range(0, 20):
+            # Student.objects.create(
+            #     is_superuser=True,
+            #     email=fake.email(),
+            #     first_name=fake.first_name(),
+            #     last_name=fake.last_name(),
+            #     password=fake.password(),
+            # )
+            Category.objects.create(title=fake.word(), description=fake.sentence())

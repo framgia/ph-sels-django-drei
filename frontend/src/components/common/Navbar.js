@@ -28,7 +28,7 @@ const Navbar = () => {
           Profile
         </NavLink>
         {auth.userData?.is_admin ? (
-          <NavLink to="/admin/categories" className="ui item">
+          <NavLink to="/admin" className="ui item">
             Admin
           </NavLink>
         ) : null}

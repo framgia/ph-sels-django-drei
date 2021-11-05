@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { addQuestion } from "../../../redux/actions/admin";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+
 const AdminQuestionAdd = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -20,12 +21,8 @@ const AdminQuestionAdd = () => {
     const answer = formValues.answer;
 
     newObj.description = formValues.question;
-    choices.map((choice, index) => {
-      if (`values[${index}]` === answer) {
-        return (choice.is_answer = true);
-      } else {
-        return (choice.is_answer = false);
-      }
+    choices.map((choice, i) => {
+      return { ...choice, is_answer: `values[${i}]` === answer };
     });
     newObj.choices = choices;
 

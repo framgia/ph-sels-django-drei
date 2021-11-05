@@ -1,5 +1,12 @@
 from rest_framework import serializers
 from learning_app.models import Category, Question, Choice
+from authentication_app.models import Student
+
+
+class AdminSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ["id", "email", "first_name", "last_name", "last_login"]
 
 
 class AdminChoiceSerializer(serializers.ModelSerializer):
