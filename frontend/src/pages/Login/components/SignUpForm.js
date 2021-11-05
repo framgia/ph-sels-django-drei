@@ -13,7 +13,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
       validate={validatePasswordMatch}
     >
       {({ handleSubmit }) => (
-        <form className="ui large form" onSubmit={handleSubmit}>
+        <form className="ui large form" onSubmit={handleSubmit} id="SignupForm">
           <div className="ui segment">
             <h3 className="ui header red ">Sign Up</h3>
             <div className="two fields">
@@ -25,7 +25,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                     }
                   >
                     <div className="ui left icon input">
-                      <i class="user icon"></i>
+                      <i className="user icon"></i>
                       <input {...input} type="text" placeholder="First Name" />
                     </div>
                   </div>
@@ -39,7 +39,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                     }
                   >
                     <div className="ui left icon input">
-                      <i class="user icon"></i>
+                      <i className="user icon"></i>
                       <input {...input} type="text" placeholder="Last Name" />
                     </div>
                   </div>
@@ -54,7 +54,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                   }
                 >
                   <div className="ui left icon input">
-                    <i class="envelope icon"></i>
+                    <i className="envelope icon"></i>
                     <input {...input} placeholder="Email" />
                   </div>
                 </div>
@@ -69,7 +69,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                     }
                   >
                     <div className="ui left icon input">
-                      <i class="lock icon"></i>
+                      <i className="lock icon"></i>
                       <input
                         {...input}
                         type="password"
@@ -87,7 +87,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                     }
                   >
                     <div className="ui left icon input">
-                      <i class="lock icon"></i>
+                      <i className="lock icon"></i>
                       <input
                         {...input}
                         type="password"
@@ -100,10 +100,14 @@ const SignUpForm = ({ onSubmit, auth }) => {
             </div>
             <ErrorHandling auth={auth} />
             <div style={{ textAlign: "left" }}>
-              <button className="ui large red button" type="submit">
+              <button
+                className="ui large red button"
+                type="submit"
+                form="SignupForm"
+              >
                 Sign up
               </button>
-              <Link to="/signin" className="ui large button" type="submit">
+              <Link to="/signin" className="ui large button" type="button">
                 Login
               </Link>
             </div>

@@ -1,5 +1,6 @@
 import { useLocation } from "react-router";
 import faker from "faker";
+
 const required = (value) =>
   value ? undefined : (
     <p style={{ color: "red", float: "left", margin: "10px" }}>
@@ -71,6 +72,7 @@ const validatePasswordMatch = (values) => {
   if (values.password !== values.password2) {
     errors.password2 = "Password does not match";
   }
+
   return errors;
 };
 export {

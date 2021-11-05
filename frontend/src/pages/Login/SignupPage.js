@@ -14,6 +14,7 @@ const SignupPage = () => {
   }, [auth, history]);
 
   const onSubmit = (formValues) => {
+    console.log("test");
     dispatch(signUp(formValues));
   };
 

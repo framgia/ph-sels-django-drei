@@ -18,7 +18,7 @@ const profile = (state = INITIAL_STATE, action) => {
     case UPDATED_USER_DETAILS:
       return { ...action.payload };
     case UPDATE_USER_DETAILS_FAIL:
-      return { error: action.payload };
+      return { ...action.payload };
     default:
       return state;
   }

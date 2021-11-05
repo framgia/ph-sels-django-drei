@@ -15,11 +15,9 @@ const ProfilePage = () => {
     if (formObj.hasOwnProperty("password")) {
       formData.append("password", formObj.password);
     }
-
     for (var key in formObj) {
       formData.append(key, formObj[key]);
     }
-
     dispatch(updateUserDetails(formData));
     event.reset();
   };

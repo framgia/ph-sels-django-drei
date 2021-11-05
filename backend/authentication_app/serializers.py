@@ -7,13 +7,44 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class StudentRetrieveUpdateSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(max_length=None, use_url=True)
+    oldPassword = serializers.CharField(write_only=True)
 
     class Meta:
         model = Student
-        fields = ["email", "first_name", "last_name", "avatar", "password"]
+        fields = [
+            "email",
+            "first_name",
+            "last_name",
+            "avatar",
+            "password",
+            "oldPassword",
+        ]
         extra_kwargs = {"password": {"write_only": True}}
 
+    def validate(self, attrs):
+        if len(attrs["first_name"]) < 2:
+            raise serializers.ValidationError({"error": "First name is too short"})
+        if len(attrs["last_name"]) < 2:
+            raise serializers.ValidationError({"error": "Last name is too short"})
+        try:
+            if attrs["password"] != attrs["password2"]:
+                raise serializers.ValidationError(
+                    {"error": "Password fields didn't match."}
+                )
+        except:
+            pass
+        return attrs
+
     def update(self, instance, validated_data):
+        try:
+            old_password = validated_data["oldPassword"]
+            password = validated_data["password"]
+            print(instance.check_password("admin"))
+            if password:
+                if not instance.check_password(old_password):
+                    raise serializers.ValidationError("Old password is not correct")
+        except:
+            pass
         try:
             instance.set_password(validated_data["password"])
             instance.save()
@@ -25,7 +56,9 @@ class StudentRetrieveUpdateSerializer(serializers.ModelSerializer):
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         try:
+            print(attrs)
             data = super().validate(attrs)
+
             data["user_id"] = self.user.pk
             data["is_admin"] = self.user.is_superuser
         except:

@@ -1,6 +1,6 @@
 import React from "react";
 import { Field, Form } from "react-final-form";
-import { validatePasswordMatch } from "../../../utils";
+
 import { required } from "../../../utils";
 import FileField from "../../../components/FileField";
 import "../../../index.css";
@@ -8,6 +8,18 @@ import Loading from "../../../components/common/Loading";
 import Message from "../../../components/common/Message";
 
 const ProfileForm = ({ onSubmit, profile }) => {
+  const validatePasswordMatch = (values) => {
+    const errors = {};
+    if (values.password !== values.password2) {
+      errors.password2 = "Password does not match";
+    }
+
+    if (values.password && !values.oldPassword) {
+      errors.oldPassword = "this field is required";
+    }
+
+    return errors;
+  };
   return (
     <Form onSubmit={onSubmit} validate={validatePasswordMatch}>
       {({ handleSubmit }) => (
@@ -81,6 +93,25 @@ const ProfileForm = ({ onSubmit, profile }) => {
                 </div>
               )}
             </Field>
+
+            <Field name="oldPassword">
+              {({ input, meta }) => (
+                <div
+                  className={
+                    meta.error && meta.touched ? "field error" : "field"
+                  }
+                >
+                  <label>Old Password</label>
+                  <input
+                    {...input}
+                    type="password"
+                    placeholder="Old Password"
+                  />
+                  {meta.error && meta.touched && <p>{meta.error}</p>}
+                </div>
+              )}
+            </Field>
+
             <div className="two fields">
               <Field name="password">
                 {({ input, meta }) => (
@@ -123,9 +154,9 @@ const ProfileForm = ({ onSubmit, profile }) => {
             ) : (
               profile.error && (
                 <Message
-                  header="Success"
+                  header="Error"
                   content={profile.error}
-                  type="positive"
+                  type="negative"
                 />
               )
             )}
