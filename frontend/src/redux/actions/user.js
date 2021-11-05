@@ -10,7 +10,6 @@ import {
   SIGN_UP_REQUEST,
   SIGN_UP_FAIL,
   SIGN_UP_SUCCESS,
-  UPDATED_USER_DETAILS,
 } from "./types";
 import api from "../../api/api";
 
@@ -87,9 +86,8 @@ const updateUserDetails = (formValues) => async (dispatch, getState) => {
   api
     .patch(`/profile/${userData.user_id}/`, formValues)
     .then((response) => {
-      dispatch({ type: UPDATE_USER_DETAILS_SUCCESS, payload: response.data });
       setTimeout(() => {
-        dispatch({ type: UPDATED_USER_DETAILS, payload: response.data });
+        dispatch({ type: UPDATE_USER_DETAILS_SUCCESS, payload: response.data });
       }, 1000);
     })
     .catch((error) => {
