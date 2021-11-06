@@ -17,14 +17,11 @@ const AdminQuestionAdd = () => {
 
   const parseFormValues = (formValues) => {
     let newObj = {};
-    const choices = formValues.values;
     const answer = formValues.answer;
-
     newObj.description = formValues.question;
-    choices.map((choice, i) => {
+    newObj.choices = formValues.values.map((choice, i) => {
       return { ...choice, is_answer: `values[${i}]` === answer };
     });
-    newObj.choices = choices;
 
     return newObj;
   };

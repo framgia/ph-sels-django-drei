@@ -35,30 +35,25 @@ const StudentProfilePage = () => {
   };
 
   const filteredActivityLog = () => {
-    let ownactivityLog = [];
-    activityLogs &&
-      activityLogs.map((log) => {
-        if (log.resourcetype === "StudentFollowInformation") {
-          log.follower.id === parseInt(id) && ownactivityLog.push(log);
-        } else {
-          log.student.id === parseInt(id) && ownactivityLog.push(log);
-        }
-        return null;
-      });
-    return ownactivityLog;
+    return (
+      activityLogs &&
+      activityLogs.filter((log) => {
+        return log.resourcetype === "StudentFollowInformation"
+          ? log.follower.id === parseInt(id)
+          : log.student.id === parseInt(id);
+      })
+    );
   };
 
-  const displayLearnings = () => {
-    let total_answer = 0;
-    activityLogs &&
-      activityLogs.map((log) => {
-        if (log.resourcetype === "StudentLesson") {
-          total_answer += parseInt(id) === log.student.id && log.total_answer;
-        }
-        return null;
-      });
-
-    return total_answer;
+  const displayItems = () => {
+    return (
+      activityLogs &&
+      activityLogs.reduce(
+        (total, log) =>
+          parseInt(id) === log.student.id && total + log.total_answer,
+        0
+      )
+    );
   };
 
   const renderProfile = () => {
@@ -76,7 +71,7 @@ const StudentProfilePage = () => {
           <p>Followers: {total_followers}</p>
           <p>Following: {total_following}</p>
           <div className="ui label green">
-            Learned items<div className="detail">{displayLearnings()}</div>
+            Learned items<div className="detail">{displayItems()}</div>
           </div>
           <br />
           <br />

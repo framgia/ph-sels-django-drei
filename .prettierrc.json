@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modifications",
+  "editor.codeActionsOnSave": null,
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "editor.tabSize": 2
+}
