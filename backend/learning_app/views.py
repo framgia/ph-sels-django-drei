@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.validators import ValidationError
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from .models import (
     StudentFollowInformation,
     Category,
@@ -9,6 +9,7 @@ from .models import (
     Question,
     StudentLesson,
     Student,
+    StudentActivityLog,
 )
 from authentication_app.models import Student
 from .serializers import (
@@ -21,16 +22,45 @@ from .serializers import (
     CategoryDetailSerializer,
     StudentQuestionAnsweredSerializer,
     StudentLessonResultSerializer,
+    STAPolymorphicSerializer,
 )
 from .pagination import CategoryListPagination, StudentListPagination
 from rest_framework.response import Response
+from django.db.models import Q
+
+
+class StudentActivityLogListView(generics.ListAPIView):
+
+    serializer_class = STAPolymorphicSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = StudentListPagination
+
+    def get_queryset(self):
+        student_id = self.kwargs.get("pk")
+        following_users = StudentFollowInformation.objects.filter(
+            follower_id=student_id, is_following=True
+        )
+
+        following_list = [student_id]
+        for f in following_users:
+            following_list.append(f.student_id)
+
+        queryset = StudentActivityLog.objects.filter(
+            Q(
+                StudentFollowInformation___follower_id__in=following_list,
+            )
+            | Q(StudentLesson___student_id__in=following_list)
+        ).order_by("-created")
+        return queryset
 
 
 class StudentLessonResultView(generics.ListAPIView):
+
     serializer_class = StudentLessonResultSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        print(self.request.user)
         return StudentQuestionAnswered.objects.filter(
             student=self.request.user, category_id=self.kwargs.get("pk")
         )

@@ -1,11 +1,20 @@
 from django.db import models
 from authentication_app.models import Student
 from polymorphic.models import PolymorphicModel
+import datetime
 
 # Create your models here.
 
 
-class StudentFollowInformation(models.Model):
+class StudentActivityLog(PolymorphicModel):
+    created = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.created = datetime.datetime.now()
+        super().save(*args, **kwargs)
+
+
+class StudentFollowInformation(StudentActivityLog):
     student = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name="student"
     )
@@ -65,7 +74,7 @@ class StudentQuestionAnswered(models.Model):
     )
 
 
-class StudentLesson(models.Model):
+class StudentLesson(StudentActivityLog):
     student = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name="student_lesson"
     )

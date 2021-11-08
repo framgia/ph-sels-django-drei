@@ -1,4 +1,5 @@
 from django.urls import path, include
+from rest_framework.decorators import action
 from .views import (
     StudentListView,
     StudentFollowView,
@@ -8,6 +9,7 @@ from .views import (
     StudentLessonView,
     StudentLessonViewByCategory,
     StudentLessonResultView,
+    StudentActivityLogListView,
 )
 
 urlpatterns = [
@@ -37,5 +39,10 @@ urlpatterns = [
         "lessons/results/<int:pk>",
         StudentLessonResultView.as_view(),
         name="retrieve-student-lesson-result",
+    ),
+    path(
+        "<int:pk>/logs",
+        StudentActivityLogListView.as_view(),
+        name="list-student-activity-log",
     ),
 ]

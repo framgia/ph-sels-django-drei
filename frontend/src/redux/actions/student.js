@@ -7,6 +7,7 @@ import {
   UNFOLLOW_STUDENT,
   FETCH_STUDENT_LESSONS,
   FETCH_STUDENT_LESSON,
+  FETCH_STUDENT_ACTIVITYLOG,
 } from "./types";
 import api from "../../api/api";
 const getUserDetails = (id) => async (dispatch, getState) => {
@@ -55,6 +56,12 @@ const getStudentLesson = (id) => async (dispatch) => {
   });
 };
 
+const getStudentActivityLog = (id) => async (dispatch) => {
+  api.get(`students/${id}/logs`).then((response) => {
+    dispatch({ type: FETCH_STUDENT_ACTIVITYLOG, payload: response.data });
+  });
+};
+
 export {
   getUserDetails,
   updateUserDetails,
@@ -64,4 +71,5 @@ export {
   unfollowStudent,
   getStudentLessons,
   getStudentLesson,
+  getStudentActivityLog,
 };

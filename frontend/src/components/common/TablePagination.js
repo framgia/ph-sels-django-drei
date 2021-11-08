@@ -6,13 +6,13 @@ const TablePagination = ({ page, setPage, pageData, pageLink, children }) => {
 
   const nextPage = () => {
     if (pageData.next) {
-      setPage(page + 1);
+      setPage((page) => page + 1);
     }
     return;
   };
   const prevPage = () => {
     if (pageData.previous) {
-      setPage(page - 1);
+      setPage((page) => page - 1);
     }
     return;
   };
