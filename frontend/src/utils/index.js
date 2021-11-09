@@ -1,6 +1,10 @@
 import { useLocation } from "react-router";
 const required = (value) =>
-  value ? undefined : <b style={{ color: "red" }}>This field is required</b>;
+  value ? undefined : (
+    <p style={{ color: "red", float: "left", margin: "10px" }}>
+      This field is required
+    </p>
+  );
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 

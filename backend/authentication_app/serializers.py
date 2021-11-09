@@ -24,9 +24,12 @@ class StudentRetrieveUpdateSerializer(serializers.ModelSerializer):
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        data = super().validate(attrs)
-        data["user_id"] = self.user.pk
-        data["is_admin"] = self.user.is_superuser
+        try:
+            data = super().validate(attrs)
+            data["user_id"] = self.user.pk
+            data["is_admin"] = self.user.is_superuser
+        except:
+            raise serializers.ValidationError({"error": "No active credentials found"})
 
         return data
 

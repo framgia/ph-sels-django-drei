@@ -16,23 +16,22 @@ const HomePage = () => {
     dispatch(getUserDetails());
   }, [dispatch, userData.user_id]);
 
-  const displayLessons = () => {
-    return (
-      activityLogs?.length > 0 &&
-      activityLogs.find(
-        (log) => userData.user_id === log.student.id && log.total_lessons
-      )
-    );
-  };
-  const displayItems = () => {
-    return (
-      activityLogs?.length > 0 &&
-      activityLogs.reduce(
-        (total, log) =>
-          userData.user_id === log.student.id && total + log.total_answer,
-        0
-      )
-    );
+  const displayLearnings = () => {
+    let total_lessons = 0;
+    let total_answer = 0;
+    activityLogs &&
+      activityLogs.map((log) => {
+        if (log.resourcetype === "StudentLesson") {
+          if (userData.user_id === log.student.id) {
+            total_lessons = log.total_lessons;
+          }
+          total_answer +=
+            userData.user_id === log.student.id && log.total_answer;
+        }
+        return null;
+      });
+
+    return [total_lessons, total_answer];
   };
 
   return (
@@ -49,17 +48,15 @@ const HomePage = () => {
             {profile.first_name + " " + profile.last_name}
           </h4>
           <div className="ui label green">
-            Learned lessons
-            <div className="detail">
-              {displayLessons() && displayLessons().total_lessons}
-            </div>
+            Learned lessons<div className="detail">{displayLearnings()[0]}</div>
           </div>
           <div className="ui label red">
             Learned items
-            <div className="detail">{displayItems()}</div>
+            <div className="detail">{displayLearnings()[1]}</div>
           </div>
         </div>
       </div>
+
       <div className="ten wide column">
         <br />
         <div className="ui segment">

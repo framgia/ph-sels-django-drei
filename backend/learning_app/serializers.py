@@ -29,10 +29,7 @@ class StudentLessonResultSerializer(serializers.ModelSerializer):
         fields = ["id", "category", "question", "answer", "is_correct_answer"]
 
     def get_is_correct_answer(self, obj):
-        try:
-            return obj.answer.value == obj.question.choices.get(is_answer=True).value
-        except:
-            return False
+        return obj.answer.value == obj.question.choices.get(is_answer=True).value
 
 
 class StudentQuestionAnsweredSerializer(serializers.ModelSerializer):
@@ -102,7 +99,6 @@ class StudentLessonSerializer(serializers.ModelSerializer):
                     == obj.student.student_answer.all()[i].answer
                 ):
                     total_answers += 1
-            
         except:
             pass
 

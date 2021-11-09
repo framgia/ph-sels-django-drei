@@ -1,12 +1,13 @@
-import { SIGN_IN, SIGN_OUT } from "../actions/types";
+import {
+  SIGN_IN_REQUEST,
+  SIGN_IN_SUCCESS,
+  SIGN_IN_FAIL,
+  SIGN_OUT,
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAIL,
+} from "../actions/types";
 import { getFromLocalStorage } from "../../utils";
-// const getFromLocalStorage = () => {
-//   if (localStorage.getItem("userInfo")) {
-//     return JSON.parse(localStorage.getItem("userInfo"));
-//   } else {
-//     return false;
-//   }
-// };
 
 const INITIAL_STATE = {
   isLoggedIn: getFromLocalStorage().isLoggedIn,
@@ -15,12 +16,22 @@ const INITIAL_STATE = {
 
 const auth = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SIGN_IN:
+    case SIGN_IN_REQUEST:
+      return { ...action.payload };
+    case SIGN_IN_SUCCESS:
       localStorage.setItem(
         "userInfo",
-        JSON.stringify({ ...state, isLoggedIn: true, userData: action.payload })
+        JSON.stringify({ isLoggedIn: true, userData: action.payload })
       );
-      return { ...state, isLoggedIn: true, userData: action.payload };
+      return { isLoggedIn: true, userData: action.payload };
+    case SIGN_IN_FAIL:
+      return { ...action.payload };
+    case SIGN_UP_REQUEST:
+      return { ...action.payload };
+    case SIGN_UP_SUCCESS:
+      return { ...action.payload };
+    case SIGN_UP_FAIL:
+      return { errors: action.payload };
     case SIGN_OUT:
       localStorage.removeItem("userInfo");
       return { ...state, isLoggedIn: false, userData: null };
