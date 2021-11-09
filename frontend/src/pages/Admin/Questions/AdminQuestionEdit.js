@@ -6,24 +6,21 @@ import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
 import { useParams } from "react-router-dom";
-import {
-  getQuestion,
-  updateQuestion,
-  deleteQuestion,
-} from "../../../redux/actions/admin";
-import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import Modal from "../../../components/common/Modal";
+import useStore from "../../../store/useStore";
 
 const AdminQuestionEdit = () => {
   const { categoryId, questionId } = useParams();
-  const dispatch = useDispatch();
   const history = useHistory();
-  const selectedQuestion = useSelector((state) => state.adminSelectedQuestion);
+  const getQuestion = useStore((state) => state.adminFetchQuestion);
+  const deleteQuestion = useStore((state) => state.adminDeleteQuestion);
+  const updateQuestion = useStore((state) => state.adminUpdateQuestion);
+  const selectedQuestion = useStore((state) => state.question);
   const [modal, setModal] = useState(false);
 
   const handleDeleteQuestion = () => {
-    dispatch(deleteQuestion(categoryId, questionId));
+    deleteQuestion(categoryId, questionId);
     history.push(`/admin/categories/${categoryId}/questions`);
   };
   const actions = (
@@ -38,8 +35,8 @@ const AdminQuestionEdit = () => {
   );
 
   useEffect(() => {
-    dispatch(getQuestion(categoryId, questionId));
-  }, [categoryId, questionId, dispatch]);
+    getQuestion(categoryId, questionId);
+  }, [categoryId, questionId, getQuestion]);
 
   const renderInitialAnswer = () => {
     let answer = "";
@@ -59,25 +56,18 @@ const AdminQuestionEdit = () => {
 
   const parseFormValues = (formValues) => {
     let newObj = {};
-    const choices = formValues.values;
     const answer = formValues.answer;
-
     newObj.description = formValues.question;
-    choices.map((choice, index) => {
-      if (`values[${index}]` === answer) {
-        return (choice.is_answer = true);
-      } else {
-        return (choice.is_answer = false);
-      }
+    newObj.choices = formValues.values.map((choice, i) => {
+      return { ...choice, is_answer: `values[${i}]` === answer };
     });
-    newObj.choices = choices;
 
     return newObj;
   };
 
   const onSubmit = async (formValues) => {
     const question = parseFormValues(formValues);
-    dispatch(updateQuestion(categoryId, questionId, question));
+    updateQuestion(categoryId, questionId, question);
     await sleep(300);
     alert("Question saved, successfully");
     history.push(`/admin/categories/${categoryId}/questions/`);

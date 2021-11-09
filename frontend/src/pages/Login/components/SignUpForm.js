@@ -2,16 +2,10 @@ import React from "react";
 import { Field, Form } from "react-final-form";
 import { required } from "../../../utils";
 import { Link } from "react-router-dom";
-import Message from "../../../components/common/Message";
-const SignUpForm = ({ onSubmit, auth }) => {
-  const validatePasswordMatch = (values) => {
-    const errors = {};
-    if (values.password !== values.password2) {
-      errors.password2 = "Password does not match";
-    }
-    return errors;
-  };
+import { validatePasswordMatch } from "../../../utils";
+import ErrorHandling from "./ErrorHandling";
 
+const SignUpForm = ({ onSubmit }) => {
   return (
     <Form
       onSubmit={(formObj) => {
@@ -20,7 +14,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
       validate={validatePasswordMatch}
     >
       {({ handleSubmit }) => (
-        <form className="ui large form" onSubmit={handleSubmit}>
+        <form className="ui large form" onSubmit={handleSubmit} id="SignupForm">
           <div className="ui segment">
             <h3 className="ui header red ">Sign Up</h3>
             <div className="two fields">
@@ -32,7 +26,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                     }
                   >
                     <div className="ui left icon input">
-                      <i class="user icon"></i>
+                      <i className="user icon"></i>
                       <input {...input} type="text" placeholder="First Name" />
                     </div>
                   </div>
@@ -46,7 +40,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                     }
                   >
                     <div className="ui left icon input">
-                      <i class="user icon"></i>
+                      <i className="user icon"></i>
                       <input {...input} type="text" placeholder="Last Name" />
                     </div>
                   </div>
@@ -61,7 +55,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                   }
                 >
                   <div className="ui left icon input">
-                    <i class="envelope icon"></i>
+                    <i className="envelope icon"></i>
                     <input {...input} placeholder="Email" />
                   </div>
                 </div>
@@ -76,7 +70,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                     }
                   >
                     <div className="ui left icon input">
-                      <i class="lock icon"></i>
+                      <i className="lock icon"></i>
                       <input
                         {...input}
                         type="password"
@@ -94,7 +88,7 @@ const SignUpForm = ({ onSubmit, auth }) => {
                     }
                   >
                     <div className="ui left icon input">
-                      <i class="lock icon"></i>
+                      <i className="lock icon"></i>
                       <input
                         {...input}
                         type="password"
@@ -105,35 +99,16 @@ const SignUpForm = ({ onSubmit, auth }) => {
                 )}
               </Field>
             </div>
-            {auth?.errors?.password && (
-              <Message
-                title="error"
-                header="Password"
-                content={auth.errors.password}
-                type="negative"
-              />
-            )}
-            {auth?.errors?.error && (
-              <Message
-                title="error"
-                header="Error"
-                content={auth?.errors?.error}
-                type="negative"
-              />
-            )}
-            {auth?.errors?.email && (
-              <Message
-                title="error"
-                content={auth.errors.email}
-                type="negative"
-                header="Email"
-              />
-            )}
+            <ErrorHandling />
             <div style={{ textAlign: "left" }}>
-              <button className="ui large red button" type="submit">
+              <button
+                className="ui large red button"
+                type="submit"
+                form="SignupForm"
+              >
                 Sign up
               </button>
-              <Link to="/signin" className="ui large button" type="submit">
+              <Link to="/signin" className="ui large button" type="button">
                 Login
               </Link>
             </div>

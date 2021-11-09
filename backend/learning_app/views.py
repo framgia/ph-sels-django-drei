@@ -61,6 +61,7 @@ class StudentLessonResultView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        print(self.request.user)
         return StudentQuestionAnswered.objects.filter(
             student=self.request.user, category_id=self.kwargs.get("pk")
         )

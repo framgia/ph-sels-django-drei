@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import Pagination from "./components/Pagination";
-import { getStudentLessons } from "../../redux/actions/student";
-import { getCategories } from "../../redux/actions/category";
-import { useDispatch } from "react-redux";
 import Lesson from "../../components/common/Lesson";
 import LessonButton from "../../components/common/LessonButton";
+import useStore from "../../store/useStore";
 const CategoryList = () => {
-  const lessons = useSelector((state) => state.students.lessons);
-  const categories = useSelector((state) => state.categories);
+  const lessons = useStore((state) => state.lessons);
+  const fetchStudentLessons = useStore((state) => state.fetchStudentLessons);
+  const fetchCategoryList = useStore((state) => state.fetchCategoryList);
+  const categories = useStore((state) => state.categories);
   const [page, setPage] = useState(1);
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCategories(page));
-    dispatch(getStudentLessons());
-  }, [dispatch, page]);
+    fetchCategoryList(page);
+    fetchStudentLessons();
+  }, [fetchCategoryList, fetchStudentLessons, page]);
 
   const renderLessonButton = (category) => {
     const x = lessons.some((lesson) => lesson.category.id === category.id);

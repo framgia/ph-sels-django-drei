@@ -1,29 +1,29 @@
 import React, { useEffect } from "react";
 import AuthForm from "./components/AuthForm";
-import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { signIn } from "../../redux/actions/user";
 import "../../index.css";
 import Header from "./components/Header";
+import useStore from "../../store/useStore";
 const LoginPage = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
-  const auth = useSelector((state) => state.auth);
+  const signIn = useStore((state) => state.signIn);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
+  const status = useStore((state) => state.status);
 
   const onSubmit = (formObj) => {
-    dispatch(signIn(formObj));
+    signIn(formObj);
   };
 
   useEffect(() => {
-    if (auth.isLoggedIn) history.push("/");
-  }, [auth, history]);
+    if (isLoggedIn) history.push("/");
+  }, [history, isLoggedIn]);
 
   return (
     <div className="center-aligned">
       <div className="ui middle aligned center aligned grid">
         <div className="column">
           <Header />
-          <AuthForm onSubmit={onSubmit} auth={auth} />
+          <AuthForm onSubmit={onSubmit} status={status} />
         </div>
       </div>
     </div>

@@ -1,20 +1,19 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router";
-import { signUp } from "../../redux/actions/user";
 import SignUpForm from "./components/SignUpForm";
 import Header from "./components/Header";
+import useStore from "../../store/useStore";
+import { useHistory } from "react-router";
 const SignupPage = () => {
-  const auth = useSelector((state) => state.auth);
+  const signUp = useStore((state) => state.signUp);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
   const history = useHistory();
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (auth.isLoggedIn) history.push("/");
-  }, [auth, history]);
+    if (isLoggedIn) history.push("/");
+  }, [isLoggedIn, history]);
 
   const onSubmit = (formValues) => {
-    dispatch(signUp(formValues));
+    signUp(formValues);
   };
 
   return (
@@ -22,7 +21,7 @@ const SignupPage = () => {
       <div className="ui middle aligned center aligned grid">
         <div className="column">
           <Header />
-          <SignUpForm onSubmit={onSubmit} auth={auth} />
+          <SignUpForm onSubmit={onSubmit} />
         </div>
       </div>
     </div>

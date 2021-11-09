@@ -21,7 +21,8 @@
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "zustand": "^3.6.4"
   },
   "scripts": {
     "start": "react-scripts start",

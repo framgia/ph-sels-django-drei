@@ -1,9 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import useStore from "../../../../store/useStore";
 const AdminListPagination = ({ page, setPage }) => {
-  const pageData = useSelector((state) => state.adminUserList.page);
+  const pageData = useStore((state) => state.admins.pageData);
   const [pages, setPages] = useState([]);
 
   const nextPage = () => {

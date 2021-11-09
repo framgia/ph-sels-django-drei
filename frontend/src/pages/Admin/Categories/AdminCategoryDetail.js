@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getCategory,
-  updateCategory,
-  deleteCategory,
-} from "../../../redux/actions/admin";
 import { useParams, useHistory } from "react-router";
 import { Field, Form } from "react-final-form";
 import { required } from "../../../utils";
 import Loading from "../../../components/common/Loading";
 import { sleep } from "../../../utils";
 import Modal from "../../../components/common/Modal";
-
+import useStore from "../../../store/useStore";
 const AdminCategoryDetail = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
-  const category = useSelector((state) => state.adminSelectedCategory);
+  const getCategory = useStore((state) => state.adminGetCategory);
+  const deleteCategory = useStore((state) => state.adminDeleteCategory);
+  const updateCategory = useStore((state) => state.adminUpdateCategory);
+  const category = useStore((state) => state.category);
   const { id } = useParams();
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
-    dispatch(getCategory(id));
-  }, [dispatch, id]);
+    getCategory(id);
+  }, [getCategory, id]);
 
   const handleDeleteCategory = () => {
-    dispatch(deleteCategory(id));
+    deleteCategory(id);
     alert("Delete successful");
     history.push("/admin/categories");
   };
@@ -44,7 +40,7 @@ const AdminCategoryDetail = () => {
       return (
         <Form
           onSubmit={(formValue) => {
-            dispatch(updateCategory(id, formValue));
+            updateCategory(id, formValue);
             alert("Successfully saved!");
             sleep(300);
             history.push("/admin/categories");

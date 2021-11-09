@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import TablePagination from "../../../../components/common/TablePagination";
-import { useSelector } from "react-redux";
+
+import useStore from "../../../../store/useStore";
 const AdminQuestionTable = ({
   questions,
   currentPage,
   setCurrentPage,
   categoryId,
 }) => {
-  const pageData = useSelector((state) => state.adminQuestions.page);
+  const pageData = useStore((state) => state.questions.pageData);
   const pageLink = `/admin/categories/${categoryId}/questions`;
   return (
     <div>

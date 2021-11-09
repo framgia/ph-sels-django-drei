@@ -1,37 +1,39 @@
 import React, { useEffect } from "react";
+
 import ActivityFeed from "../../components/common/ActivityFeed";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getStudentActivityLog,
-  getUserDetails,
-} from "../../redux/actions/student";
+import useStore from "../../store/useStore";
 const HomePage = () => {
-  const dispatch = useDispatch();
-  const { activityLogs } = useSelector((state) => state.students);
-  const { userData } = useSelector((state) => state.auth);
-  const profile = useSelector((state) => state.profile);
+  const profile = useStore((state) => state.profile);
+  const getUserDetails = useStore((state) => state.getUserDetails);
+  const userData = useStore((state) => state.userData);
+
+  const fetchStudentActivityLog = useStore(
+    (state) => state.fetchStudentActivityLog
+  );
+  const activityLogs = useStore((state) => state.activityLogs);
 
   useEffect(() => {
-    dispatch(getStudentActivityLog(userData.user_id));
-    dispatch(getUserDetails());
-  }, [dispatch, userData.user_id]);
+    getUserDetails();
+    fetchStudentActivityLog(userData.user_id);
+  }, [getUserDetails, userData, fetchStudentActivityLog]);
 
-  const displayLearnings = () => {
-    let total_lessons = 0;
-    let total_answer = 0;
-    activityLogs &&
-      activityLogs.map((log) => {
-        if (log.resourcetype === "StudentLesson") {
-          if (userData.user_id === log.student.id) {
-            total_lessons = log.total_lessons;
-          }
-          total_answer +=
-            userData.user_id === log.student.id && log.total_answer;
-        }
-        return null;
-      });
-
-    return [total_lessons, total_answer];
+  const displayLessons = () => {
+    return (
+      activityLogs?.length > 0 &&
+      activityLogs.find(
+        (log) => userData.user_id === log.student.id && log.total_lessons
+      )
+    );
+  };
+  const displayItems = () => {
+    return (
+      activityLogs?.length > 0 &&
+      activityLogs.reduce(
+        (total, log) =>
+          userData.user_id === log.student.id && total + log.total_answer,
+        0
+      )
+    );
   };
 
   return (
@@ -48,15 +50,17 @@ const HomePage = () => {
             {profile.first_name + " " + profile.last_name}
           </h4>
           <div className="ui label green">
-            Learned lessons<div className="detail">{displayLearnings()[0]}</div>
+            Learned lessons
+            <div className="detail">
+              {displayLessons() && displayLessons().total_lessons}
+            </div>
           </div>
           <div className="ui label red">
             Learned items
-            <div className="detail">{displayLearnings()[1]}</div>
+            <div className="detail">{displayItems()}</div>
           </div>
         </div>
       </div>
-
       <div className="ten wide column">
         <br />
         <div className="ui segment">

@@ -1,11 +1,15 @@
 import React from "react";
 
 const Message = ({ header, content, type }) => {
-  const renderContent = (content) => {
-    return Array.isArray(content) ? (
-      content.map((c) => (
-        <ul className="ui list">
-          <li>{c}</li>
+  const renderArray = (c) => {
+    return Array.isArray(c) ? c.map((i) => <li key={i}>{i}</li>) : <li>{c}</li>;
+  };
+
+  const renderContent = () => {
+    return typeof content === "object" ? (
+      Object.values(content).map((c, i) => (
+        <ul className="ui list" key={i}>
+          {renderArray(c)}
         </ul>
       ))
     ) : (

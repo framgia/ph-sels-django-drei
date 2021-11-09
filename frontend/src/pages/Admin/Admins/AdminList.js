@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAdminList } from "../../../redux/actions/admin";
 import AdminListPagination from "./components/AdminListPagination";
 import { useQuery } from "../../../utils";
 import { timeSince } from "../../../utils";
+import useStore from "../../../store/useStore";
 const AdminList = () => {
-  const dispatch = useDispatch();
-  const { admins } = useSelector((state) => state.adminUserList);
+  const fetchAdmins = useStore((state) => state.adminFetchUsers);
+  const admins = useStore((state) => Object.values(state.admins.results));
   const query = useQuery();
   const [page, setPage] = useState(parseInt(query.get("page")) || 1);
 
   useEffect(() => {
-    dispatch(fetchAdminList(page));
-  }, [dispatch, page]);
+    fetchAdmins(page);
+  }, [fetchAdmins, page]);
 
   return (
     <div>
