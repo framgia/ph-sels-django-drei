@@ -2,6 +2,7 @@ from rest_framework import generics
 from rest_framework.validators import ValidationError
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import filters
 from .models import (
     StudentFollowInformation,
     Category,
@@ -202,6 +203,8 @@ class StudentListView(generics.ListAPIView):
     permission_classes = [
         IsAuthenticated,
     ]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["first_name", "last_name"]
 
     def get_queryset(self):
         return Student.objects.exclude(email=self.request.user)

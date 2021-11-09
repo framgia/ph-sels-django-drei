@@ -1,4 +1,5 @@
 import { useLocation } from "react-router";
+import faker from "faker";
 const required = (value) =>
   value ? undefined : (
     <p style={{ color: "red", float: "left", margin: "10px" }}>
@@ -18,8 +19,7 @@ const trimQuestion = (values) => {
 };
 
 const tempStrFunction = (str) =>
-  "https://" + str.substring(31, str.length) &&
-  "https://semantic-ui.com/images/avatar/large/justen.jpg";
+  "https://" + str.substring(31, str.length) && faker.image.avatar();
 
 const getFromLocalStorage = () => {
   if (localStorage.getItem("userInfo")) {

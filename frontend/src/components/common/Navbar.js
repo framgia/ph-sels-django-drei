@@ -32,7 +32,11 @@ const Navbar = () => {
             Admin
           </NavLink>
         ) : null}
-        <button className="ui button primary" onClick={logout}>
+        <button
+          className="ui button item"
+          style={{ color: "red" }}
+          onClick={logout}
+        >
           Logout
         </button>
       </div>

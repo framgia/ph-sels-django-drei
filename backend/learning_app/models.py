@@ -16,7 +16,7 @@ class StudentActivityLog(PolymorphicModel):
 
 class StudentFollowInformation(StudentActivityLog):
     student = models.ForeignKey(
-        Student, on_delete=models.CASCADE, related_name="student"
+        Student, on_delete=models.CASCADE, related_name="student_follow"
     )
     follower = models.ForeignKey(
         Student,
