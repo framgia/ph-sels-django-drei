@@ -1,19 +1,19 @@
 import React from "react";
 import { Form, Field } from "react-final-form";
 import { required } from "../../../utils";
-import { useDispatch } from "react-redux";
-import { addCategory } from "../../../redux/actions/admin";
+
 import { useHistory } from "react-router";
+import useStore from "../../../store/useStore";
 
 const AdminCategoryAdd = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
+  const addCategory = useStore((state) => state.adminAddCategory);
 
   const renderAdminCategory = () => {
     return (
       <Form
         onSubmit={(formValue) => {
-          dispatch(addCategory(formValue));
+          addCategory(formValue);
           history.push("/admin/categories/");
         }}
       >

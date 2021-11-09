@@ -12,7 +12,6 @@ class Command(BaseCommand):
 
         for i in range(0, 20):
             Student.objects.create(
-                is_superuser=True,
                 email=fake.email(),
                 first_name=fake.first_name(),
                 last_name=fake.last_name(),

@@ -7,7 +7,7 @@ import HomePage from "./pages/Home/HomePage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import ProtectedCourseRoute from "./components/common/ProtectedCourseRoute";
 import AdminOnlyRoute from "./components/common/AdminOnlyRoute";
-import ProfileEditPage from "./pages/Profile/ProfileEditPage";
+import ProfilePage from "./pages/Profile/ProfilePage";
 import StudentListPage from "./pages/Students/StudentListPage";
 import StudentProfilePage from "./pages/Students/StudentProfilePage";
 import CategoryList from "./pages/Categories/CategoryList";
@@ -49,7 +49,7 @@ const App = () => {
       )}
       <Switch>
         <ProtectedRoute exact path="/" component={HomePage} />
-        <ProtectedRoute path="/profile" component={ProfileEditPage} />
+        <ProtectedRoute path="/profile" component={ProfilePage} />
         <ProtectedRoute exact path="/students" component={StudentListPage} />
         <ProtectedRoute
           path="/students/profile/:id"

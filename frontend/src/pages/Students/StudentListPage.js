@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getStudentList } from "../../redux/actions/student";
 import "../../index.css";
 import Loading from "../../components/common/Loading";
 import Student from "./components/Student";
 import SearchStudent from "./components/SearchStudent";
+import useStore from "../../store/useStore";
+import Message from "../../components/common/Message";
 
 const StudentListPage = () => {
-  const students = useSelector((state) => state.students);
+  const students = useStore((state) => state.students);
+  const fetchStudentList = useStore((state) => state.fetchStudentList);
+  const status = useStore((state) => state.status);
+
   const observer = useRef("");
   const [limit, setLimit] = useState(10);
-  const dispatch = useDispatch();
   const [searchText, setSearchText] = useState("");
   const [debounceSearch, setDebounceSearch] = useState(searchText);
 
@@ -26,8 +28,8 @@ const StudentListPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getStudentList(limit, 0, debounceSearch));
-  }, [dispatch, limit, debounceSearch]);
+    fetchStudentList(limit, 0, debounceSearch);
+  }, [limit, debounceSearch, fetchStudentList]);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -50,6 +52,11 @@ const StudentListPage = () => {
         );
       });
     } else {
+      if (status.errMessage) {
+        return (
+          <Message header="Error" type="negative" content={status.errMessage} />
+        );
+      }
       return <Loading />;
     }
   };
@@ -67,6 +74,7 @@ const StudentListPage = () => {
       <div className="row">
         <div className="ui five column grid link doubling cards">
           {renderStudents()}
+          {students.count < 1 && <p>No results found</p>}
         </div>
       </div>
     </div>

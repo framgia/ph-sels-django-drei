@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { getLessonResult } from "../../redux/actions/result";
-
+import useStore from "../../store/useStore";
 const ResultDetail = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const results = useSelector((state) => Object.values(state.results));
+  const results = useStore((state) => state.results);
+  const fetchLessonResults = useStore((state) => state.fetchLessonResults);
 
   useEffect(() => {
-    dispatch(getLessonResult(id));
-  }, [dispatch, id]);
+    fetchLessonResults(id);
+  }, [fetchLessonResults, id]);
 
   const renderResultTable = () => {
     return (

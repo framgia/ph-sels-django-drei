@@ -1,32 +1,32 @@
 import React, { useEffect } from "react";
-import { getCategory, submitAnswer } from "../../redux/actions/category";
-import { useDispatch, useSelector } from "react-redux";
+
 import { useParams, useHistory } from "react-router";
 import Wizard from "./components/WizardForm";
 import { sleep, trimQuestion } from "../../utils";
 import Question from "./components/Question";
-import { getStudentLesson } from "../../redux/actions/student";
+import useStore from "../../store/useStore";
 const CategoryDetail = () => {
-  const dispatch = useDispatch();
-  const category = useSelector((state) => state.categories);
+  const fetchCategory = useStore((state) => state.fetchCategory);
+  const category = useStore((state) => state.category);
+  const fetchStudentLessons = useStore((state) => state.fetchStudentLessons);
+  const submitAnswer = useStore((state) => state.submitAnswer);
+
   const { id } = useParams();
   const history = useHistory();
 
   const QUESTION_KEY = "question ";
 
   const onSubmit = async (values) => {
-    dispatch(
-      submitAnswer(id, { category: category.id, answers: trimQuestion(values) })
-    );
+    submitAnswer(id, { category: category.id, answers: trimQuestion(values) });
     await sleep(300);
     alert("Answers have been submitted!");
     history.push("/categories");
   };
 
   useEffect(() => {
-    dispatch(getCategory(id));
-    dispatch(getStudentLesson(id));
-  }, [dispatch, id, history]);
+    fetchCategory(id);
+    fetchStudentLessons(id);
+  }, [fetchCategory, fetchStudentLessons, id, history]);
 
   const renderCategory = () => {
     if (category.question) {

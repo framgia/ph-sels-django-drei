@@ -6,30 +6,20 @@ import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
 import { useParams } from "react-router-dom";
-import { addQuestion } from "../../../redux/actions/admin";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-
+import useStore from "../../../store/useStore";
 const AdminQuestionAdd = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const history = useHistory();
+  const addQuestion = useStore((state) => state.AdminQuestionAdd);
 
   const parseFormValues = (formValues) => {
     let newObj = {};
-    const choices = formValues.values;
     const answer = formValues.answer;
-
     newObj.description = formValues.question;
-    choices.map((choice, index) => {
-      if (`values[${index}]` === answer) {
-        choice.is_answer = true;
-      } else {
-        choice.is_answer = false;
-      }
-      return choices;
+    newObj.choices = formValues.values.map((choice, i) => {
+      return { ...choice, is_answer: `values[${i}]` === answer };
     });
-    newObj.choices = choices;
 
     return newObj;
   };
@@ -41,7 +31,7 @@ const AdminQuestionAdd = () => {
   const onSubmit = async (formValues) => {
     const question = parseFormValues(formValues);
 
-    dispatch(addQuestion(id, question));
+    addQuestion(id, question);
     await sleep(300);
     alert("Question saved, successfully");
     history.push("/admin/categories");

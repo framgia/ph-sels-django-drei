@@ -5,3 +5,38 @@
   padding: 10px;
   padding-top: 20%;
 }
+
+.button-image-container {
+  position: relative;
+  width: 50%;
+  max-width: 300px;
+}
+
+.button-image-container img {
+  display: block;
+  width: 50%;
+  height: 30%;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 40%;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1;
+  transition: 0.5s ease;
+  opacity: 0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.button-image-container .overlay {
+  opacity: 1;
+}
+.icon {
+  cursor: pointer;
+}

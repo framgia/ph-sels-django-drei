@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getQuestionList } from "../../../redux/actions/admin";
-import { useDispatch, useSelector } from "react-redux";
 import AdminQuestionTable from "./components/AdminQuestionTable";
 import { useQuery } from "../../../utils";
 import { useParams } from "react-router";
+import useStore from "../../../store/useStore";
 
 const AdminQuestionList = () => {
-  const dispatch = useDispatch();
-  const questions = useSelector(
-    (state) =>
-      state.adminQuestions.questions &&
-      Object.values(state.adminQuestions.questions)
-  );
+  const questions = useStore((state) => Object.values(state.questions.results));
+  const getQuestions = useStore((state) => state.adminFetchQuestionList);
   const query = useQuery();
   const { id } = useParams();
   const [currentPage, setCurrentPage] = useState(
@@ -19,8 +14,8 @@ const AdminQuestionList = () => {
   );
 
   useEffect(() => {
-    dispatch(getQuestionList(id, currentPage));
-  }, [currentPage, dispatch, id]);
+    getQuestions(id, currentPage);
+  }, [currentPage, getQuestions, id]);
   return (
     <div>
       <AdminQuestionTable
