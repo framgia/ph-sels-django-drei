@@ -1,11 +1,12 @@
 import React from "react";
-import AuthForm from "./pages/Login/AuthForm";
+import "semantic-ui-css/semantic.min.css";
 import { Switch, Route, useLocation } from "react-router-dom";
+import LoginPage from "./pages/Login/LoginPage";
+import SignupPage from "./pages/Login/SignupPage";
 import HomePage from "./pages/Home/HomePage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import ProtectedCourseRoute from "./components/common/ProtectedCourseRoute";
 import AdminOnlyRoute from "./components/common/AdminOnlyRoute";
-import SignUpForm from "./pages/Login/SignUpForm";
 import ProfileEditPage from "./pages/Profile/ProfileEditPage";
 import StudentListPage from "./pages/Students/StudentListPage";
 import StudentProfilePage from "./pages/Students/StudentProfilePage";
@@ -89,8 +90,8 @@ const App = () => {
           path="/admin/categories/:id"
           component={AdminCategoryDetail}
         />
-        <Route path="/signin" component={AuthForm} />
-        <Route path="/signup" component={SignUpForm} />
+        <Route path="/signin" component={LoginPage} />
+        <Route path="/signup" component={SignupPage} />
       </Switch>
     </div>
   );
