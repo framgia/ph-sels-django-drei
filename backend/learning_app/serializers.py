@@ -70,9 +70,25 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class StudentListSerializer(serializers.ModelSerializer):
+    total_followers = serializers.SerializerMethodField()
+    total_lesson_learned = serializers.SerializerMethodField()
+
     class Meta:
         model = Student
-        fields = ["id", "first_name", "last_name", "avatar"]
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "avatar",
+            "total_followers",
+            "total_lesson_learned",
+        ]
+
+    def get_total_followers(self, obj):
+        return obj.student_follow.all().count()
+
+    def get_total_lesson_learned(self, obj):
+        return obj.student_lesson.all().count()
 
 
 class StudentLessonSerializer(serializers.ModelSerializer):

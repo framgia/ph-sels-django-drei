@@ -22,14 +22,17 @@ const updateUserDetails = (formValues) => async (dispatch, getState) => {
   dispatch({ type: UPDATE_USER_DETAILS, payload: response.data });
 };
 
-const getStudentList = (limit, offset) => async (dispatch) => {
+const getStudentList = (limit, offset, student) => async (dispatch) => {
   const response = await api.get("/students/", {
     params: {
       limit: limit,
       offset: offset,
+      search: student,
     },
   });
-  dispatch({ type: FETCH_STUDENT_LIST, payload: response.data });
+  setTimeout(() => {
+    dispatch({ type: FETCH_STUDENT_LIST, payload: response.data });
+  }, 300);
 };
 const getStudentDetail = (id) => async (dispatch) => {
   const response = await api.get(`/students/follow/${id}`);
